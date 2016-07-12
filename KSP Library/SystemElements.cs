@@ -31,6 +31,16 @@ namespace KSP_Library
             {
                 return bodies;
             }
+
+            public override string ToString()
+            {
+                StringBuilder bodyNames = new StringBuilder();
+                foreach(Body body in bodies)
+                {
+                    bodyNames.Append(body.ToString());
+                }
+                return bodyNames.ToString();
+            }
         }
 
         public class Body
@@ -38,6 +48,31 @@ namespace KSP_Library
             public string Name { get; set; }
             public int Radius { get; set; }
             public long GM { get; set; }
+
+            public override string ToString()
+            {
+                return Name;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                {
+                    return false;
+                }
+                else if (!(obj is Body))
+                {
+                    return false;
+                }
+                else if (Name != ((Body)obj).Name)
+                {
+                    return false;
+                }
+                else return true;
+            }
+            public override int GetHashCode()
+            {
+                return Name.GetHashCode();
+            }
         }
         public class Star : Body
         {
