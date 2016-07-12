@@ -53,6 +53,31 @@ namespace KSP_Library
                 StageList = stageList;
             }
 
+            public override string ToString()
+            {
+                return RocketName;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                {
+                    return false;
+                }
+                else if (!(obj is Rocket))
+                {
+                    return false;
+                }
+                else if (ID != ((Rocket)obj).ID)
+                {
+                    return false;
+                }
+                else return true;
+            }
+            public override int GetHashCode()
+            {
+                return ID.GetHashCode();
+            }
+
             // private methods
             //private object[] indexStageProperty(string propertyName)
             //{
@@ -140,68 +165,103 @@ namespace KSP_Library
                 MaxTWR = GetMaxTWR(GM, Radius);
             }
 
+            [Obsolete]
             public int GetDeltaV()
             {
                 DeltaV = (int)Math.Round(Math.Log(WetMass / DryMass) * 9.81 * Isp);
                 return DeltaV;
             }
+            [Obsolete]
             public int GetIsp()
             {
                 Isp = (int)Math.Round(DeltaV / (Math.Log(WetMass / DryMass) * 9.81));
                 return Isp;
             }
+            [Obsolete]
             public double GetMinTWR()
             {
                 MinTWR = Thrust / (WetMass * (9.81));
                 return MinTWR;
             }
+            [Obsolete]
             public double GetMaxTWR()
             {
                 MaxTWR = Thrust / (DryMass * (9.81));
                 return MaxTWR;
             }
+            [Obsolete]
             public double GetMinTWR(long GM, double Radius)
             {
                 MinTWR = Thrust / (WetMass * (GM / Math.Pow(Radius, 2)));
                 return MinTWR;
             }
+            [Obsolete]
             public double GetMaxTWR(long GM, double Radius)
             {
                 MaxTWR = Thrust / (DryMass * (GM / Math.Pow(Radius, 2)));
                 return MaxTWR;
             }
+            [Obsolete]
             public double GetThrustFromMinTWR()
             {
                 Thrust = MinTWR * (WetMass * (9.81));
                 return Thrust;
             }
+            [Obsolete]
             public double GetThrustFromMaxTWR()
             {
                 Thrust = MaxTWR * (DryMass * (9.81));
                 return Thrust;
             }
+            [Obsolete]
             public double GetThrustFromMinTWR(long GM, double Radius)
             {
                 Thrust = MinTWR * (WetMass * (GM / Math.Pow(Radius, 2)));
                 return Thrust;
             }
+            [Obsolete]
             public double GetThrustFromMaxTWR(long GM, double Radius)
             {
                 Thrust = MaxTWR * (DryMass * (GM / Math.Pow(Radius, 2)));
                 return Thrust;
             }
+            [Obsolete]
             public void GetTWR(out double minTWR, out double maxTWR)
             {
                 minTWR = GetMinTWR();
                 maxTWR = GetMaxTWR();
             }
+            [Obsolete]
             public void GetTWR(long GM, double Radius, out double minTWR, out double maxTWR)
             {
                 minTWR = GetMinTWR(GM, Radius);
                 maxTWR = GetMaxTWR(GM, Radius);
             }
+
+            public override string ToString()
+            {
+                return StageName;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                {
+                    return false;
+                }
+                else if (!(obj is Stage))
+                {
+                    return false;
+                }
+                else if (ID != ((Stage)obj).ID)
+                {
+                    return false;
+                }
+                else return true;
+            }
+            public override int GetHashCode()
+            {
+                return ID.GetHashCode();
+            }
         }
     }
-
-
 }
