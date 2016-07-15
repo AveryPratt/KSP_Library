@@ -53,6 +53,181 @@ namespace KSP_Library
                 StageList = stageList;
             }
 
+            // methods
+            public int HighestWetMass(out object value)
+            {
+                return calculateHighest(InputValue.WetMass, out value);
+            }
+            public int LowestWetMass(out object value)
+            {
+                return calculateLowest(InputValue.WetMass, out value);
+            }
+            public double AverageWetMass()
+            {
+                return calculateAverage(InputValue.WetMass);
+            }
+
+            public int HighestDryMass(out object value)
+            {
+                return calculateHighest(InputValue.DryMass, out value);
+            }
+            public int LowestDryMass(out object value)
+            {
+                return calculateLowest(InputValue.DryMass, out value);
+            }
+            public double AverageDryMass()
+            {
+                return calculateAverage(InputValue.DryMass);
+            }
+
+            public double HighestMassRatio()
+            {
+                return calculateRatio(InputValue.WetMass, InputValue.DryMass).Max();
+            }
+            public double LowestMassRatio()
+            {
+                return calculateRatio(InputValue.WetMass, InputValue.DryMass).Min();
+            }
+
+            public int TotalDeltaV()
+            {
+                return (int)calculateTotal(InputValue.DeltaV);
+            }
+            public int HighestDeltaV(out object value)
+            {
+                return calculateHighest(InputValue.DeltaV, out value);
+            }
+            public int LowestDeltaV(out object value)
+            {
+                return calculateLowest(InputValue.DeltaV, out value);
+            }
+            public int AverageDeltaV()
+            {
+                return (int)calculateAverage(InputValue.DeltaV);
+            }
+
+            public int HighestIsp(out object value)
+            {
+                return calculateHighest(InputValue.Isp, out value);
+            }
+            public int LowestIsp(out object value)
+            {
+                return calculateLowest(InputValue.Isp, out value);
+            }
+            public int AverageIsp()
+            {
+                return (int)calculateAverage(InputValue.Isp);
+            }
+
+            public int HighestThrust(out object value)
+            {
+                return calculateHighest(InputValue.Thrust, out value);
+            }
+            public int LowestThrust(out object value)
+            {
+                return calculateLowest(InputValue.Thrust, out value);
+            }
+            public double AverageThrust()
+            {
+                return calculateAverage(InputValue.Thrust);
+            }
+
+            public int HighestMinTWR(out object value)
+            {
+                return calculateHighest(InputValue.MinTWR, out value);
+            }
+            public int LowestMinTWR(out object value)
+            {
+                return calculateLowest(InputValue.MinTWR, out value);
+            }
+            public double AverageMinTWR()
+            {
+                return calculateAverage(InputValue.MinTWR);
+            }
+
+            public int HighestMaxTWR(out object value)
+            {
+                return calculateHighest(InputValue.MaxTWR, out value);
+            }
+            public int LowestMaxTWR(out object value)
+            {
+                return calculateLowest(InputValue.MaxTWR, out value);
+            }
+            public double AverageMaxTWR()
+            {
+                return calculateAverage(InputValue.MaxTWR);
+            }
+
+            private double[] indexStagePropertyValues(InputValue stageProperty)
+            {
+                double[] values = new double[StageList.Count];
+                foreach (Stage stage in StageList)
+                {
+                    switch (stageProperty)
+                    {
+                        case InputValue.WetMass:
+                            values[stage.ID] = stage.WetMass - values.Sum(); // subtracting the sum of the object values before it means that each stage's wet mass will be individual and not cumulative.
+                            break;
+                        case InputValue.DryMass:
+                            values[stage.ID] = stage.DryMass - values.Sum(); // subtracting the sum of the object values before it means that each stage's wet mass will be individual and not cumulative.
+                            break;
+                        case InputValue.Isp:
+                            values[stage.ID] = stage.Isp;
+                            break;
+                        case InputValue.DeltaV:
+                            values[stage.ID] = stage.DeltaV;
+                            break;
+                        case InputValue.Thrust:
+                            values[stage.ID] = stage.Thrust;
+                            break;
+                        case InputValue.MinTWR:
+                            values[stage.ID] = stage.MinTWR;
+                            break;
+                        case InputValue.MaxTWR:
+                            values[stage.ID] = stage.MaxTWR;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return values;
+            }
+
+            private double calculateTotal(InputValue stageProperty)
+            {
+                double[] values = indexStagePropertyValues(stageProperty);
+                return values.Sum();
+            }
+            private double calculateAverage(InputValue stageProperty)
+            {
+                double[] values = indexStagePropertyValues(stageProperty);
+                return values.Average();
+            }
+            private int calculateHighest(InputValue stageProperty, out object value)
+            {
+                double[] values = indexStagePropertyValues(stageProperty);
+                value = values.Max();
+                return Array.IndexOf(values, value) + 1;
+            }
+            private int calculateLowest(InputValue stageProperty, out object value)
+            {
+                double[] values = indexStagePropertyValues(stageProperty);
+                value = values.Min();
+                return Array.IndexOf(values, value) + 1;
+            }
+            private double[] calculateRatio(InputValue numerator, InputValue denominator)
+            {
+                double[] numeratorValues = indexStagePropertyValues(numerator);
+                double[] denominatorValues = indexStagePropertyValues(denominator);
+                double[] ratio = new double[StageList.Count()];
+                for (int i = 0; i < StageList.Count(); i++)
+                {
+                    ratio[i] = numeratorValues[i] / denominatorValues[i];
+                }
+                return ratio;
+            }
+
+            // overrides
             public override string ToString()
             {
                 return RocketName;
@@ -77,12 +252,6 @@ namespace KSP_Library
             {
                 return ID.GetHashCode();
             }
-
-            // private methods
-            //private object[] indexStageProperty(string propertyName)
-            //{
-
-            //}
         }
         public class Stage
         {
@@ -156,13 +325,13 @@ namespace KSP_Library
             }
             public void CalculateTWR()
             {
-                MinTWR = GetMinTWR();
-                MaxTWR = GetMaxTWR();
+                CalculateMinTWR();
+                CalculateMaxTWR();
             }
             public void CalculateTWR(long GM, double Radius)
             {
-                MinTWR = GetMinTWR(GM, Radius);
-                MaxTWR = GetMaxTWR(GM, Radius);
+                CalculateMinTWR(GM, Radius);
+                CalculateMaxTWR(GM, Radius);
             }
 
             [Obsolete]
@@ -238,6 +407,7 @@ namespace KSP_Library
                 maxTWR = GetMaxTWR(GM, Radius);
             }
 
+            // overrides
             public override string ToString()
             {
                 return StageName;
