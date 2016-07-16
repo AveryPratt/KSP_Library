@@ -24,14 +24,18 @@ namespace KSP_Library
             public Rocket(string rocketName)
             {
                 RocketName = rocketName;
+                StageList = new List<Stage>();
             }
             public Rocket(int id)
             {
                 ID = id;
+                StageList = new List<Stage>();
             }
-            public Rocket(string name, int id)
+            public Rocket(string rocketName, int id)
             {
+                RocketName = rocketName;
                 ID = id;
+                StageList = new List<Stage>();
             }
             public Rocket(List<Stage> stageList)
             {
@@ -47,8 +51,9 @@ namespace KSP_Library
                 ID = id;
                 StageList = stageList;
             }
-            public Rocket(string name, int id, List<Stage> stageList)
+            public Rocket(string rocketName, int id, List<Stage> stageList)
             {
+                RocketName = rocketName;
                 ID = id;
                 StageList = stageList;
             }
@@ -230,7 +235,28 @@ namespace KSP_Library
             // overrides
             public override string ToString()
             {
-                return RocketName;
+                string deltaV;
+                try
+                {
+                    deltaV = TotalDeltaV().ToString();
+                }
+                catch
+                {
+                    deltaV = "NA";
+                }
+                StringBuilder rocketString = new StringBuilder(
+                    "------------ Rocket ------------\n\n" +
+                    RocketName +
+                    ":\nID = " + ID +
+                    "\nNo. of Stages = " + StageList.Count.ToString() +
+                    "\nTotal Δv = " + deltaV +
+                    "\n\n------------ Stages ------------\n\n");
+                foreach (Stage stage in StageList)
+                {
+                    rocketString.Append(stage.ToString() + "\n\n");
+                }
+                rocketString.Append("--------------------------------");
+                return rocketString.ToString();
             }
             public override bool Equals(object obj)
             {
@@ -253,6 +279,7 @@ namespace KSP_Library
                 return ID.GetHashCode();
             }
         }
+
         public class Stage
         {
             // properties
@@ -334,84 +361,95 @@ namespace KSP_Library
                 CalculateMaxTWR(GM, Radius);
             }
 
-            [Obsolete]
+            #region Method Graveyard
+            [Obsolete("Use CalculateDeltaV instead", true)]
             public int GetDeltaV()
             {
                 DeltaV = (int)Math.Round(Math.Log(WetMass / DryMass) * 9.81 * Isp);
                 return DeltaV;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateIsp instead", true)]
             public int GetIsp()
             {
                 Isp = (int)Math.Round(DeltaV / (Math.Log(WetMass / DryMass) * 9.81));
                 return Isp;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateMinTWR instead", true)]
             public double GetMinTWR()
             {
                 MinTWR = Thrust / (WetMass * (9.81));
                 return MinTWR;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateMaxTWR instead", true)]
             public double GetMaxTWR()
             {
                 MaxTWR = Thrust / (DryMass * (9.81));
                 return MaxTWR;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateMinTWR instead", true)]
             public double GetMinTWR(long GM, double Radius)
             {
                 MinTWR = Thrust / (WetMass * (GM / Math.Pow(Radius, 2)));
                 return MinTWR;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateMaxTWR instead", true)]
             public double GetMaxTWR(long GM, double Radius)
             {
                 MaxTWR = Thrust / (DryMass * (GM / Math.Pow(Radius, 2)));
                 return MaxTWR;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateThrustFromMinTWR instead", true)]
             public double GetThrustFromMinTWR()
             {
                 Thrust = MinTWR * (WetMass * (9.81));
                 return Thrust;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateThrustFromMaxTWR instead", true)]
             public double GetThrustFromMaxTWR()
             {
                 Thrust = MaxTWR * (DryMass * (9.81));
                 return Thrust;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateThrustFromMinTWR instead", true)]
             public double GetThrustFromMinTWR(long GM, double Radius)
             {
                 Thrust = MinTWR * (WetMass * (GM / Math.Pow(Radius, 2)));
                 return Thrust;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateThrustFromMaxTWR instead", true)]
             public double GetThrustFromMaxTWR(long GM, double Radius)
             {
                 Thrust = MaxTWR * (DryMass * (GM / Math.Pow(Radius, 2)));
                 return Thrust;
             }
-            [Obsolete]
+            [Obsolete("Use CalculateTWR instead", true)]
             public void GetTWR(out double minTWR, out double maxTWR)
             {
                 minTWR = GetMinTWR();
                 maxTWR = GetMaxTWR();
             }
-            [Obsolete]
+            [Obsolete("Use CalculateTWR instead", true)]
             public void GetTWR(long GM, double Radius, out double minTWR, out double maxTWR)
             {
                 minTWR = GetMinTWR(GM, Radius);
                 maxTWR = GetMaxTWR(GM, Radius);
             }
+            #endregion
 
             // overrides
             public override string ToString()
             {
-                return StageName;
-            }
+                string stageString = StageName +
+                    ":\nID = " + ID +
+                    ",\nWet Mass = " + WetMass +
+                    ",\nDry Mass = " + DryMass +
+                    ",\nIsp = " + Isp + 
+                    ",\nΔv = " + DeltaV +
+                    ",\nThrust = " + Thrust +
+                    ",\nMin. TWR = " + MinTWR + 
+                    ",\nMax. TWR = " + MaxTWR;
+                return stageString.ToString();
+        }
             public override bool Equals(object obj)
             {
                 if (obj == null)
