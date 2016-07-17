@@ -15,6 +15,7 @@ namespace KSP_Library
             public string RocketName { get; set; }
             public int ID { get; set; }
             public List<Stage> StageList { get; set; }
+            public double PayloadMass { get; set; }
 
             // constructors
             public Rocket()
@@ -57,8 +58,74 @@ namespace KSP_Library
                 ID = id;
                 StageList = stageList;
             }
+            public Rocket(double payloadMass)
+            {
+                StageList = new List<Stage>();
+                PayloadMass = payloadMass;
+            }
+            public Rocket(string rocketName, double payloadMass)
+            {
+                RocketName = rocketName;
+                StageList = new List<Stage>();
+                PayloadMass = payloadMass;
+            }
+            public Rocket(int id, double payloadMass)
+            {
+                ID = id;
+                StageList = new List<Stage>();
+                PayloadMass = payloadMass;
+            }
+            public Rocket(string rocketName, int id, double payloadMass)
+            {
+                RocketName = rocketName;
+                ID = id;
+                StageList = new List<Stage>();
+                PayloadMass = payloadMass;
+            }
+            public Rocket(List<Stage> stageList, double payloadMass)
+            {
+                StageList = stageList;
+                PayloadMass = payloadMass;
+            }
+            public Rocket(string rocketName, List<Stage> stageList, double payloadMass)
+            {
+                RocketName = rocketName;
+                StageList = stageList;
+                PayloadMass = payloadMass;
+            }
+            public Rocket(int id, List<Stage> stageList, double payloadMass)
+            {
+                ID = id;
+                StageList = stageList;
+                PayloadMass = payloadMass;
+            }
+            public Rocket(string rocketName, int id, List<Stage> stageList, double payloadMass)
+            {
+                RocketName = rocketName;
+                ID = id;
+                StageList = stageList;
+                PayloadMass = payloadMass;
+            }
 
             // methods
+            public void AddPayloadMassToStages()
+            {
+                foreach (Stage stage in StageList)
+                {
+                    stage.WetMass += PayloadMass;
+                    stage.DryMass += PayloadMass;
+                }
+            }
+            public void SubtractPayloadMassFromStages()
+            {
+                foreach (Stage stage in StageList)
+                {
+                    stage.WetMass -= PayloadMass;
+                    stage.DryMass -= PayloadMass;
+                }
+            }
+
+            // calculations
             public int HighestWetMass(out object value)
             {
                 return calculateHighest(InputValue.WetMass, out value);
@@ -309,7 +376,7 @@ namespace KSP_Library
                 ID = id;
             }
 
-            // methods
+            // calculations
             public void CalculateDeltaV()
             {
                 DeltaV = (int)Math.Round(Math.Log(WetMass / DryMass) * 9.81 * Isp);
