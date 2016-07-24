@@ -43,11 +43,31 @@ namespace KSP_Library
             }
         }
 
-        public class Body
+        public class Star : Body
+        {
+            new public BigInteger GM { get; set; }
+        }
+
+        public class OrbitingBody : Body
+        {
+            public Body ParentBody { get; set; }
+            public int Periapsis { get; set; }
+            public int Apoapsis { get; set; }
+            public int SemiMajorAxis { get; set; }
+            public double Eccentricity { get; set; }
+            public double Inclination { get; set; }
+            public double ArgPer { get; set; }
+            public double LongAsc { get; set; }
+        }
+
+        public abstract class Body
         {
             public string Name { get; set; }
             public int Radius { get; set; }
             public long GM { get; set; }
+            public int SOI { get; set; }
+            public bool HasAtmosphere { get; set; }
+            public int AtmosphereHeight { get; set; }
 
             public override string ToString()
             {
@@ -73,10 +93,6 @@ namespace KSP_Library
             {
                 return Name.GetHashCode();
             }
-        }
-        public class Star : Body
-        {
-            new public BigInteger GM { get; set; }
         }
 
         public struct BigGM
