@@ -9,8 +9,10 @@ namespace KSP_Library
 {
     namespace Systems
     {
+        // systems
         internal interface ISystem
         {
+            Body[] Bodies { get; set; }
             Body GetSystemBody(string bodyName);
             Body GetSystemBody(int bodyID);
             Body[] GetSystemBodies();
@@ -18,24 +20,24 @@ namespace KSP_Library
 
         public abstract class SolarSystem : ISystem
         {
-            public Body[] bodies { get; set; }
+            public Body[] Bodies { get; set; }
             public virtual Body GetSystemBody(string bodyName)
             {
-                return bodies.Single(b => b.Name == bodyName.ToUpper());
+                return Bodies.Single(b => b.Name == bodyName.ToUpper());
             }
             public virtual Body GetSystemBody(int bodyIndex)
             {
-                return bodies[bodyIndex];
+                return Bodies[bodyIndex];
             }
             public virtual Body[] GetSystemBodies()
             {
-                return bodies;
+                return Bodies;
             }
 
             public override string ToString()
             {
                 StringBuilder bodyNames = new StringBuilder();
-                foreach(Body body in bodies)
+                foreach(Body body in Bodies)
                 {
                     bodyNames.Append(body.ToString());
                 }
@@ -43,29 +45,13 @@ namespace KSP_Library
             }
         }
 
-        public class Star : Body
-        {
-            new public BigInteger GM { get; set; }
-        }
-
-        public class OrbitingBody : Body
-        {
-            public Body ParentBody { get; set; }
-            public int Periapsis { get; set; }
-            public int Apoapsis { get; set; }
-            public int SemiMajorAxis { get; set; }
-            public double Eccentricity { get; set; }
-            public double Inclination { get; set; }
-            public double ArgPer { get; set; }
-            public double LongAsc { get; set; }
-        }
-
+        // celestial bodies
         public abstract class Body
         {
             public string Name { get; set; }
             public int Radius { get; set; }
             public long GM { get; set; }
-            public int SOI { get; set; }
+            public long SOI { get; set; }
             public bool HasAtmosphere { get; set; }
             public int AtmosphereHeight { get; set; }
 
@@ -95,12 +81,29 @@ namespace KSP_Library
             }
         }
 
+        public class Star : Body
+        {
+            new public BigInteger GM { get; set; }
+        }
+
         public struct BigGM
         {
             public static BigInteger ENotation(double value, double displacement)
             {
                 return (BigInteger)value * (BigInteger)Math.Pow(10, displacement);
             }
+        }
+
+        public class OrbitingBody : Body
+        {
+            public Body ParentBody { get; set; }
+            public int Periapsis { get; set; }
+            public int Apoapsis { get; set; }
+            public int SemiMajorAxis { get; set; }
+            public double Eccentricity { get; set; }
+            public double Inclination { get; set; }
+            public double ArgPer { get; set; }
+            public double LongAsc { get; set; }
         }
     }
 }
