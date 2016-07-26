@@ -97,13 +97,20 @@ namespace KSP_Library
         public class OrbitingBody : Body
         {
             public Body ParentBody { get; set; }
-            public int Periapsis { get; set; }
-            public int Apoapsis { get; set; }
-            public int SemiMajorAxis { get; set; }
+            public long Periapsis { get; set; }
+            public long Apoapsis { get; set; }
+            public long SemiMajorAxis { get; set; }
             public double Eccentricity { get; set; }
             public double Inclination { get; set; }
             public double ArgPer { get; set; }
             public double LongAsc { get; set; }
+        }
+
+        public class Planet : OrbitingBody
+        {
+            public double AxialTilt { get; set; }
+            public double RightAsc { get; set; }
+            public double Declination { get; set; }
         }
     }
 }
