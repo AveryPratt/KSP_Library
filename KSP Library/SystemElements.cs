@@ -7,110 +7,199 @@ using System.Threading.Tasks;
 
 namespace KSP_Library
 {
-    namespace Systems
+    // systems
+    internal interface ISystem
     {
-        // systems
-        internal interface ISystem
+        Body[] Bodies { get; set; }
+        Body GetSystemBody(string bodyName);
+        Body GetSystemBody(int bodyIndex);
+        Body[] GetSystemBodies();
+    }
+
+    public abstract class SolarSystem : ISystem
+    {
+        public Body[] Bodies { get; set; }
+
+        public virtual Body GetSystemBody(string bodyName)
         {
-            Body[] Bodies { get; set; }
-            Body GetSystemBody(string bodyName);
-            Body GetSystemBody(int bodyID);
-            Body[] GetSystemBodies();
+            return Bodies.Single(b => b.Name == bodyName.ToUpper());
+        }
+        public virtual Body GetSystemBody(int bodyIndex)
+        {
+            return Bodies[bodyIndex];
+        }
+        public virtual Body[] GetSystemBodies()
+        {
+            return Bodies;
         }
 
-        public abstract class SolarSystem : ISystem
+        public override string ToString()
         {
-            public Body[] Bodies { get; set; }
-            public virtual Body GetSystemBody(string bodyName)
+            StringBuilder bodyNames = new StringBuilder();
+            foreach(Body body in Bodies)
             {
-                return Bodies.Single(b => b.Name == bodyName.ToUpper());
+                bodyNames.Append(body.ToString());
             }
-            public virtual Body GetSystemBody(int bodyIndex)
-            {
-                return Bodies[bodyIndex];
-            }
-            public virtual Body[] GetSystemBodies()
-            {
-                return Bodies;
-            }
-
-            public override string ToString()
-            {
-                StringBuilder bodyNames = new StringBuilder();
-                foreach(Body body in Bodies)
-                {
-                    bodyNames.Append(body.ToString());
-                }
-                return bodyNames.ToString();
-            }
-        }
-
-        // celestial bodies
-        public abstract class Body
-        {
-            public string Name { get; set; }
-            public int Radius { get; set; }
-            public long GM { get; set; }
-            public long SOI { get; set; }
-            public bool HasAtmosphere { get; set; }
-            public int AtmosphereHeight { get; set; }
-
-            public override string ToString()
-            {
-                return Name;
-            }
-            public override bool Equals(object obj)
-            {
-                if (obj == null)
-                {
-                    return false;
-                }
-                else if (!(obj is Body))
-                {
-                    return false;
-                }
-                else if (Name != ((Body)obj).Name)
-                {
-                    return false;
-                }
-                else return true;
-            }
-            public override int GetHashCode()
-            {
-                return Name.GetHashCode();
-            }
-        }
-
-        public class Star : Body
-        {
-            new public BigInteger GM { get; set; }
-        }
-
-        public struct BigGM
-        {
-            public static BigInteger ENotation(double value, double displacement)
-            {
-                return (BigInteger)value * (BigInteger)Math.Pow(10, displacement);
-            }
-        }
-
-        public class OrbitingBody : Body
-        {
-            public Body ParentBody { get; set; }
-            public long Periapsis { get; set; }
-            public long Apoapsis { get; set; }
-            public long SemiMajorAxis { get; set; }
-            public double Eccentricity { get; set; }
-            public double Inclination { get; set; }
-            public double ArgPer { get; set; }
-            public double LongAsc { get; set; }
-        }
-
-        public class Planet : OrbitingBody
-        {
-            public double AxialTilt { get; set; }
-            public double RightAsc { get; set; }
-            public double Declination { get; set; }
+            return bodyNames.ToString();
         }
     }
+
+    // celestial bodies
+    public interface IParent
+    {
+        OrbitingBody[] ChildBodies { get; set; }
+    }
+
+    public interface IOrbital
+    {
+        int SemiMajorAxis { get; set; }
+        double Eccentricity { get; set; }
+        double Inclination { get; set; }
+        double ArgPer { get; set; }
+        double LongAsc { get; set; }
+    }
+
+    public abstract class Body
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public long GM { get; set; }
+        public int Radius { get; set; }
+        public int AtmosphereHeight { get; set; }
+        public double NPRightAsc { get; set; }
+        public double NPDeclination { get; set; }
+        public int RotPeriod { get; set; }
+    }
+
+    public class OrbitingObject : IOrbital
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int SemiMajorAxis { get; set; }
+        public double Eccentricity { get; set; }
+        public double Inclination { get; set; }
+        public double ArgPer { get; set; }
+        public double LongAsc { get; set; }
+    }
+
+    public class OrbitingBody : Body, IOrbital
+    {
+        public int SemiMajorAxis { get; set; }
+        public double Eccentricity { get; set; }
+        public double Inclination { get; set; }
+        public double ArgPer { get; set; }
+        public double LongAsc { get; set; }
+        public int SOIRad { get; set; }
+
+        public void CalculateSOIRad()
+        {
+
+        }
+    }
+
+    public class ParentOrbitingBody : OrbitingBody, IParent
+    {
+        public OrbitingBody[] ChildBodies { get; set; }
+    }
+
+    public class Star : Body, IParent
+    {
+        public OrbitingBody[] ChildBodies { get; set; }
+    }
+
+    //public abstract class Body
+    //{
+    //    // independent properties
+    //    public string Name { get; set; }
+    //    public int Radius { get; set; }
+    //    public long GM { get; set; }
+    //    public int AtmosphereHeight { get; set; }
+
+    //    // possibly dependent properties
+    //    public bool HasAtmosphere { get; set; }
+    //    public long SOI { get; set; }
+
+    //    // new methods
+    //    public int GetEscapeVelocity(int distance, bool IsDistanceFromCenter)
+    //    {
+    //        if (!IsDistanceFromCenter)
+    //        {
+    //            distance += Radius;
+    //        }
+    //        return (int)Math.Round(Math.Sqrt((2*GM)/distance));
+    //    }
+    //    public int GetOrbitalVelocity(int semiMajorAxis, int distance, bool IsDistanceFromCenter)
+    //    {
+    //        if (!IsDistanceFromCenter)
+    //        {
+    //            distance += Radius;
+    //        }
+    //        return (int)Math.Round(Math.Sqrt(GM * (2 / distance - 1 / semiMajorAxis)));
+    //    }
+
+    //    // override methods
+    //    public override string ToString()
+    //    {
+    //        return Name;
+    //    }
+    //    public override bool Equals(object obj)
+    //    {
+    //        if (obj == null)
+    //        {
+    //            return false;
+    //        }
+    //        else if (!(obj is Body))
+    //        {
+    //            return false;
+    //        }
+    //        else if (Name != ((Body)obj).Name)
+    //        {
+    //            return false;
+    //        }
+    //        else return true;
+    //    }
+    //    public override int GetHashCode()
+    //    {
+    //        return Name.GetHashCode();
+    //    }
+    //}
+
+    //public class Star : Body
+    //{
+    //    new public BigInteger GM { get; set; }
+    //}
+
+    //public struct BigGM
+    //{
+    //    public static BigInteger ENotation(double value, double displacement)
+    //    {
+    //        return (BigInteger)value * (BigInteger)Math.Pow(10, displacement);
+    //    }
+    //}
+
+    //public class OrbitingBody : Body
+    //{
+    //    // independent properties
+    //    public Body ParentBody { get; set; }
+    //    public long SemiMajorAxis { get; set; }
+    //    public double Eccentricity { get; set; }
+    //    public double Inclination { get; set; }
+    //    public double ArgPer { get; set; }
+    //    public double LongAsc { get; set; }
+
+    //    // dependent properties
+    //    public long OrbitalPeriod { get; set; }
+    //    public long Periapsis { get; set; }
+    //    public long Apoapsis { get; set; }
+    //}
+
+    //public class RotatingBody : OrbitingBody
+    //{
+    //    // independent properties
+    //    public double RightAsc { get; set; }
+    //    public double Declination { get; set; }
+
+    //    // dependent properties
+    //    public double AxialTilt { get; set; }
+    //}
 }

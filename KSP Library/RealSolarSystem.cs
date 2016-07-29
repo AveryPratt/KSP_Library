@@ -21,7 +21,7 @@ namespace KSP_Library
                     //GM = 132712440018000000000
                 };
 
-                Bodies[1] = new Planet
+                Bodies[1] = new RotatingBody
                 {
                     Name = "MERCURY",
                     Radius = 2440000,
@@ -40,7 +40,7 @@ namespace KSP_Library
                     Declination = 61.45
                 };
 
-                Bodies[2] = new Planet
+                Bodies[2] = new RotatingBody
                 {
                     Name = "VENUS",
                     Radius = 6052000,
@@ -59,7 +59,7 @@ namespace KSP_Library
                     Declination = 67.16
                 };
 
-                Bodies[3] = new Planet
+                Bodies[3] = new RotatingBody
                 {
                     Name = "EARTH",
                     Radius = 6374327,
@@ -89,7 +89,7 @@ namespace KSP_Library
                     Inclination = 5.145
                 };
 
-                Bodies[5] = new Planet
+                Bodies[5] = new RotatingBody
                 {
                     Name = "MARS",
                     Radius = 3390000,
@@ -134,7 +134,7 @@ namespace KSP_Library
                     Inclination = 27.58
                 };
 
-                Bodies[8] = new Planet
+                Bodies[8] = new RotatingBody
                 {
                     Name = "JUPITER",
                     Radius = 69911000,
@@ -205,7 +205,7 @@ namespace KSP_Library
                     Inclination = 2.017
                 };
 
-                Bodies[13] = new Planet
+                Bodies[13] = new RotatingBody
                 {
                     Name = "SATURN",
                     Radius = 58232000,
@@ -316,7 +316,7 @@ namespace KSP_Library
                     // 15.47 to Saturn's equator
                 };
 
-                Bodies[21] = new Planet
+                Bodies[21] = new RotatingBody
                 {
                     Name = "URANUS",
                     Radius = 25362000,
@@ -400,7 +400,7 @@ namespace KSP_Library
                     Inclination = .058 // to Uranus's Equator
                 };
 
-                Bodies[27] = new Planet
+                Bodies[27] = new RotatingBody
                 {
                     Name = "NEPTUNE",
                     Radius = 24622000,
@@ -446,7 +446,7 @@ namespace KSP_Library
                     // 156.885 to Neptune's Equator
                 };
 
-                Bodies[30] = new Planet
+                Bodies[30] = new RotatingBody
                 {
                     Name = "PLUTO",
                     Radius = 1187000,
