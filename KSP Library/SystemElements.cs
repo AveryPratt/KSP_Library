@@ -13,7 +13,6 @@ namespace KSP_Library
         Body[] Bodies { get; set; }
         Body GetSystemBody(string bodyName);
         Body GetSystemBody(int bodyIndex);
-        Body[] GetSystemBodies();
     }
 
     public abstract class SolarSystem : ISystem
@@ -27,10 +26,6 @@ namespace KSP_Library
         public virtual Body GetSystemBody(int bodyIndex)
         {
             return Bodies[bodyIndex];
-        }
-        public virtual Body[] GetSystemBodies()
-        {
-            return Bodies;
         }
 
         public override string ToString()
@@ -52,7 +47,8 @@ namespace KSP_Library
 
     public interface IOrbital
     {
-        int SemiMajorAxis { get; set; }
+        Body ParentBody { get; set; }
+        long SemiMajorAxis { get; set; }
         double Eccentricity { get; set; }
         double Inclination { get; set; }
         double ArgPer { get; set; }
@@ -75,7 +71,8 @@ namespace KSP_Library
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int SemiMajorAxis { get; set; }
+        public Body ParentBody { get; set; }
+        public long SemiMajorAxis { get; set; }
         public double Eccentricity { get; set; }
         public double Inclination { get; set; }
         public double ArgPer { get; set; }
@@ -84,12 +81,13 @@ namespace KSP_Library
 
     public class OrbitingBody : Body, IOrbital
     {
-        public int SemiMajorAxis { get; set; }
+        public Body ParentBody { get; set; }
+        public long SemiMajorAxis { get; set; }
         public double Eccentricity { get; set; }
         public double Inclination { get; set; }
         public double ArgPer { get; set; }
         public double LongAsc { get; set; }
-        public int SOIRad { get; set; }
+        public long SOIRad { get; set; }
 
         public void CalculateSOIRad()
         {
@@ -105,6 +103,15 @@ namespace KSP_Library
     public class Star : Body, IParent
     {
         public OrbitingBody[] ChildBodies { get; set; }
+        new public BigInteger GM { get; set; }
+    }
+
+    public struct BigGM
+    {
+        public static BigInteger ENotation(double value, double displacement)
+        {
+            return (BigInteger)value * (BigInteger)Math.Pow(10, displacement);
+        }
     }
 
     //public abstract class Body
@@ -167,14 +174,6 @@ namespace KSP_Library
     //public class Star : Body
     //{
     //    new public BigInteger GM { get; set; }
-    //}
-
-    //public struct BigGM
-    //{
-    //    public static BigInteger ENotation(double value, double displacement)
-    //    {
-    //        return (BigInteger)value * (BigInteger)Math.Pow(10, displacement);
-    //    }
     //}
 
     //public class OrbitingBody : Body
