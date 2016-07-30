@@ -21,12 +21,11 @@ namespace KSP_Library
                     //GM = 132712440018000000000
                 };
 
-                Bodies[1] = new RotatingBody
+                Bodies[1] = new OrbitingBody
                 {
                     Name = "MERCURY",
                     Radius = 2440000,
                     GM = 22032000000000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 57909050000,
@@ -35,17 +34,16 @@ namespace KSP_Library
                     ArgPer = 29.124,
                     LongAsc = 48.331,
 
-                    AxialTilt = .034,
-                    RightAsc = 281.01,
-                    Declination = 61.45
+                    //AxialTilt = .034,
+                    NPRightAsc = 281.01,
+                    NPDeclination = 61.45
                 };
 
-                Bodies[2] = new RotatingBody
+                Bodies[2] = new OrbitingBody
                 {
                     Name = "VENUS",
                     Radius = 6052000,
                     GM = 324859000000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 108208000000,
@@ -54,17 +52,16 @@ namespace KSP_Library
                     ArgPer = 54.884,
                     LongAsc = 76.680,
 
-                    AxialTilt = 177.36,
-                    RightAsc = 272.76,
-                    Declination = 67.16
+                    //AxialTilt = 177.36,
+                    NPRightAsc = 272.76,
+                    NPDeclination = 67.16
                 };
 
-                Bodies[3] = new RotatingBody
+                Bodies[3] = new OrbitingBody
                 {
                     Name = "EARTH",
                     Radius = 6374327,
                     GM = 398600441800000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 149598023000,
@@ -73,7 +70,7 @@ namespace KSP_Library
                     ArgPer = 114.20783,
                     LongAsc = 348.73936, //-11.26064
 
-                    AxialTilt = 23.4392811,
+                    //AxialTilt = 23.4392811,
                 };
 
                 Bodies[4] = new OrbitingBody
@@ -81,7 +78,6 @@ namespace KSP_Library
                     Name = "MOON",
                     Radius = 1737000,
                     GM = 4904869500000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[3],
                     SemiMajorAxis = 384399000,
@@ -89,12 +85,11 @@ namespace KSP_Library
                     Inclination = 5.145
                 };
 
-                Bodies[5] = new RotatingBody
+                Bodies[5] = new OrbitingBody
                 {
                     Name = "MARS",
                     Radius = 3390000,
                     GM = 42828370000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 227939200000,
@@ -103,9 +98,9 @@ namespace KSP_Library
                     ArgPer = 286.502,
                     LongAsc = 49.558,
 
-                    AxialTilt = 25.19,
-                    RightAsc = 317.68143,
-                    Declination = 52.88650
+                    //AxialTilt = 25.19,
+                    NPRightAsc = 317.68143,
+                    NPDeclination = 52.88650
                 };
 
                 Bodies[6] = new OrbitingBody
@@ -113,7 +108,6 @@ namespace KSP_Library
                     Name = "PHOBOS",
                     Radius = 11266,
                     GM = 711390,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[5],
                     SemiMajorAxis = 9376000,
@@ -126,7 +120,6 @@ namespace KSP_Library
                     Name = "DEIMOS",
                     Radius = 6200,
                     GM = 98523,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[5],
                     SemiMajorAxis = 23463200,
@@ -134,12 +127,11 @@ namespace KSP_Library
                     Inclination = 27.58
                 };
 
-                Bodies[8] = new RotatingBody
+                Bodies[8] = new OrbitingBody
                 {
                     Name = "JUPITER",
                     Radius = 69911000,
                     GM = 126686534000000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 778299000000,
@@ -148,9 +140,9 @@ namespace KSP_Library
                     ArgPer = 273.867,
                     LongAsc = 100.464,
 
-                    AxialTilt = 3.13,
-                    RightAsc = 268.057,
-                    Declination = 64.496
+                    //AxialTilt = 3.13,
+                    NPRightAsc = 268.057,
+                    NPDeclination = 64.496
                 };
 
                 Bodies[9] = new OrbitingBody
@@ -158,7 +150,6 @@ namespace KSP_Library
                     Name = "IO",
                     Radius = 1821600,
                     GM = 5961246900000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 57909050000,
@@ -171,7 +162,6 @@ namespace KSP_Library
                     Name = "EUROPA",
                     Radius = 1560800,
                     GM = 3203454300000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 670900000,
@@ -184,7 +174,6 @@ namespace KSP_Library
                     Name = "GANYMEDE",
                     Radius = 2634100,
                     GM = 9890319200000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 1070400000,
@@ -197,7 +186,6 @@ namespace KSP_Library
                     Name = "CALLISTO",
                     Radius = 2410300,
                     GM = 7180896300000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 1882700000,
@@ -205,12 +193,11 @@ namespace KSP_Library
                     Inclination = 2.017
                 };
 
-                Bodies[13] = new RotatingBody
+                Bodies[13] = new OrbitingBody
                 {
                     Name = "SATURN",
                     Radius = 58232000,
                     GM = 37931187000000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 1429390000000,
@@ -219,9 +206,9 @@ namespace KSP_Library
                     ArgPer = 339.392,
                     LongAsc = 113.665,
 
-                    AxialTilt = 26.73,
-                    RightAsc = 40.589,
-                    Declination = 83.537
+                    //AxialTilt = 26.73,
+                    NPRightAsc = 40.589,
+                    NPDeclination = 83.537
                 };
 
                 Bodies[14] = new OrbitingBody
@@ -229,7 +216,6 @@ namespace KSP_Library
                     Name = "MIMAS",
                     Radius = 198200,
                     GM = 2502312814,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 185539000,
@@ -242,7 +228,6 @@ namespace KSP_Library
                     Name = "ENCELADUS",
                     Radius = 252100,
                     GM = 7209474698,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 237948000,
@@ -255,7 +240,6 @@ namespace KSP_Library
                     Name = "TETHYS",
                     Radius = 531100,
                     GM = 41209040219,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 294619000,
@@ -268,7 +252,6 @@ namespace KSP_Library
                     Name = "DIONE",
                     Radius = 561400,
                     GM = 73111342842,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 377396000,
@@ -281,7 +264,6 @@ namespace KSP_Library
                     Name = "RHEA",
                     Radius = 763800,
                     GM = 153938856534,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 527108000,
@@ -294,7 +276,6 @@ namespace KSP_Library
                     Name = "TITAN",
                     Radius = 2575500,
                     GM = 8977972400000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 1221870000,
@@ -307,7 +288,6 @@ namespace KSP_Library
                     Name = "IAPETUS",
                     Radius = 734500,
                     GM = 120509524408,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 3560820000,
@@ -316,12 +296,11 @@ namespace KSP_Library
                     // 15.47 to Saturn's equator
                 };
 
-                Bodies[21] = new RotatingBody
+                Bodies[21] = new OrbitingBody
                 {
                     Name = "URANUS",
                     Radius = 25362000,
                     GM = 5793939000000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 2875040000000,
@@ -330,9 +309,9 @@ namespace KSP_Library
                     ArgPer = 96.998857,
                     LongAsc = 74.006,
 
-                    AxialTilt = 97.77,
-                    RightAsc = 257.311,
-                    Declination = -15.175
+                    //AxialTilt = 97.77,
+                    NPRightAsc = 257.311,
+                    NPDeclination = -15.175
                 };
 
                 Bodies[22] = new OrbitingBody
@@ -340,7 +319,6 @@ namespace KSP_Library
                     Name = "MIRANDA",
                     Radius = 235800,
                     GM = 4398218720,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 129390000,
@@ -353,7 +331,6 @@ namespace KSP_Library
                     Name = "ARIEL",
                     Radius = 578900,
                     GM = 90300302400,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 191020000,
@@ -366,7 +343,6 @@ namespace KSP_Library
                     Name = "UMBRIEL",
                     Radius = 584700,
                     GM = 78220217600,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 266000000,
@@ -379,7 +355,6 @@ namespace KSP_Library
                     Name = "TITANIA",
                     Radius = 788400,
                     GM = 235394801600,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 435910000,
@@ -392,7 +367,6 @@ namespace KSP_Library
                     Name = "OBERON",
                     Radius = 761400,
                     GM = 201156771200,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 583520000,
@@ -400,12 +374,11 @@ namespace KSP_Library
                     Inclination = .058 // to Uranus's Equator
                 };
 
-                Bodies[27] = new RotatingBody
+                Bodies[27] = new OrbitingBody
                 {
                     Name = "NEPTUNE",
                     Radius = 24622000,
                     GM = 6836529000000000,
-                    HasAtmosphere = true,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 4504450000000,
@@ -414,9 +387,9 @@ namespace KSP_Library
                     ArgPer = 276.336,
                     LongAsc = 131.784,
 
-                    AxialTilt = 28.32,
-                    RightAsc = 299.3,
-                    Declination = 42.950
+                    //AxialTilt = 28.32,
+                    NPRightAsc = 299.3,
+                    NPDeclination = 42.950
                 };
 
                 Bodies[28] = new OrbitingBody
@@ -424,7 +397,6 @@ namespace KSP_Library
                     Name = "PROTEUS",
                     Radius = 210000,
                     GM = 2936595200,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[27],
                     SemiMajorAxis = 117647000,
@@ -437,7 +409,6 @@ namespace KSP_Library
                     Name = "TRITON",
                     Radius = 1353400,
                     GM = 1428253100000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[27],
                     SemiMajorAxis = 354759000,
@@ -446,12 +417,11 @@ namespace KSP_Library
                     // 156.885 to Neptune's Equator
                 };
 
-                Bodies[30] = new RotatingBody
+                Bodies[30] = new OrbitingBody
                 {
                     Name = "PLUTO",
                     Radius = 1187000,
                     GM = 871000000000,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 5915000000000,
@@ -460,9 +430,9 @@ namespace KSP_Library
                     ArgPer = 113.834,
                     LongAsc = 110.299,
 
-                    AxialTilt = 119.591,
-                    RightAsc = 132.993,
-                    Declination = -6.163
+                    //AxialTilt = 119.591,
+                    NPRightAsc = 132.993,
+                    NPDeclination = -6.163
                 };
 
                 Bodies[31] = new OrbitingBody
@@ -470,7 +440,6 @@ namespace KSP_Library
                     Name = "CHARON",
                     Radius = 606000,
                     GM = 105850908800,
-                    HasAtmosphere = false,
 
                     ParentBody = Bodies[30],
                     SemiMajorAxis = 19571000, // to Pluto's center of mass

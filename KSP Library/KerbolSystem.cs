@@ -18,7 +18,6 @@ namespace KSP_Library
                     Radius = 261600000,
                     GM = BigGM.ENotation(1.1723328, 18),
                     //GM = 1172332800000000000
-                    HasAtmosphere = true,
                     AtmosphereHeight = 600000
                 };
 
@@ -27,8 +26,7 @@ namespace KSP_Library
                     Name = "MOHO",
                     Radius = 250000,
                     GM = 168609380000,
-                    HasAtmosphere = false,
-                    SOI = 9646663,
+                    SOIRad = 9646663,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 5263138304,
@@ -38,14 +36,13 @@ namespace KSP_Library
                     LongAsc = 70
                 };
 
-                Bodies[2] = new OrbitingBody
+                Bodies[2] = new ParentOrbitingBody
                 {
                     Name = "EVE",
                     Radius = 700000,
                     GM = 8171730200000,
-                    HasAtmosphere = true,
                     AtmosphereHeight = 90000,
-                    SOI = 85109365,
+                    SOIRad = 85109365,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 9832684544,
@@ -60,8 +57,7 @@ namespace KSP_Library
                     Name = "GILLY",
                     Radius = 13000,
                     GM = 8289450, //49.8
-                    HasAtmosphere = false,
-                    SOI = 126123, //.27
+                    SOIRad = 126123, //.27
 
                     ParentBody = Bodies[2],
                     SemiMajorAxis = 31500000,
@@ -76,9 +72,8 @@ namespace KSP_Library
                     Name = "KERBIN",
                     Radius = 600000,
                     GM = 3531600000000,
-                    HasAtmosphere = true,
                     AtmosphereHeight = 70000,
-                    SOI = 84159286,
+                    SOIRad = 84159286,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 13599840256,
@@ -93,8 +88,7 @@ namespace KSP_Library
                     Name = "MUN",
                     Radius = 200000,
                     GM = 65138398000,
-                    HasAtmosphere = false,
-                    SOI = 2429559, //.1
+                    SOIRad = 2429559, //.1
 
                     ParentBody = Bodies[4],
                     SemiMajorAxis = 12000000,
@@ -109,8 +103,7 @@ namespace KSP_Library
                     Name = "MINMUS",
                     Radius = 60000,
                     GM = 1765800000,
-                    HasAtmosphere = false,
-                    SOI = 2247428, //.4
+                    SOIRad = 2247428, //.4
 
                     ParentBody = Bodies[4],
                     SemiMajorAxis = 47000000,
@@ -125,9 +118,8 @@ namespace KSP_Library
                     Name = "DUNA",
                     Radius = 320000,
                     GM = 301363210000,
-                    HasAtmosphere = true,
                     AtmosphereHeight = 50000,
-                    SOI = 47921949,
+                    SOIRad = 47921949,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 20726155264,
@@ -142,8 +134,7 @@ namespace KSP_Library
                     Name = "IKE",
                     Radius = 130000,
                     GM = 18568369000,
-                    HasAtmosphere = false,
-                    SOI = 1049599, //8.9
+                    SOIRad = 1049599, //8.9
 
                     ParentBody = Bodies[7],
                     SemiMajorAxis = 3200000,
@@ -158,8 +149,7 @@ namespace KSP_Library
                     Name = "DRES",
                     Radius = 138000,
                     GM = 21484489000,
-                    HasAtmosphere = false,
-                    SOI = 32832840,
+                    SOIRad = 32832840,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 40839348203,
@@ -174,9 +164,8 @@ namespace KSP_Library
                     Name = "JOOL",
                     Radius = 6000000,
                     GM = 282528000000000,
-                    HasAtmosphere = true,
                     AtmosphereHeight = 200000,
-                    SOI = 2455985200,
+                    SOIRad = 2455985200,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 68773560320,
@@ -191,9 +180,8 @@ namespace KSP_Library
                     Name = "LAYTHE",
                     Radius = 500000,
                     GM = 1962000000000,
-                    HasAtmosphere = true,
                     AtmosphereHeight = 50000,
-                    SOI = 3723646, //5.8
+                    SOIRad = 3723646, //5.8
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 27184000,
@@ -208,8 +196,7 @@ namespace KSP_Library
                     Name = "VALL",
                     Radius = 300000,
                     GM = 207481500000,
-                    HasAtmosphere = false,
-                    SOI = 2406401, //.4
+                    SOIRad = 2406401, //.4
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 43152000,
@@ -224,8 +211,7 @@ namespace KSP_Library
                     Name = "TYLO",
                     Radius = 600000,
                     GM = 2825280000000,
-                    HasAtmosphere = false,
-                    SOI = 10856518,
+                    SOIRad = 10856518,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 68500000,
@@ -240,8 +226,7 @@ namespace KSP_Library
                     Name = "BOP",
                     Radius = 65000,
                     GM = 2486834900,
-                    HasAtmosphere = false,
-                    SOI = 1221061, //0.9
+                    SOIRad = 1221061, //0.9
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 128500000,
@@ -256,8 +241,7 @@ namespace KSP_Library
                     Name = "POL",
                     Radius = 44000,
                     GM = 721702080,
-                    HasAtmosphere = false,
-                    SOI = 1042139, // 8.9
+                    SOIRad = 1042139, // 8.9
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 179890000,
@@ -272,8 +256,7 @@ namespace KSP_Library
                     Name = "EELOO",
                     Radius = 210000,
                     GM = 74410815000,
-                    HasAtmosphere = false,
-                    SOI = 119082940,
+                    SOIRad = 119082940,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 90118820000,

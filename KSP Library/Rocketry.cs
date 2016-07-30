@@ -22,7 +22,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 StageList = new List<Stage>();
             }
             public Rocket(int id)
@@ -32,7 +32,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, int id)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 ID = id;
                 StageList = new List<Stage>();
             }
@@ -42,7 +42,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, List<Stage> stageList)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 StageList = stageList;
             }
             public Rocket(int id, List<Stage> stageList)
@@ -52,7 +52,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, int id, List<Stage> stageList)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 ID = id;
                 StageList = stageList;
             }
@@ -63,7 +63,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, double payloadMass)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 StageList = new List<Stage>();
                 PayloadMass = payloadMass;
             }
@@ -75,7 +75,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, int id, double payloadMass)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 ID = id;
                 StageList = new List<Stage>();
                 PayloadMass = payloadMass;
@@ -87,7 +87,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, List<Stage> stageList, double payloadMass)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 StageList = stageList;
                 PayloadMass = payloadMass;
             }
@@ -99,7 +99,7 @@ namespace KSP_Library
             }
             public Rocket(string rocketName, int id, List<Stage> stageList, double payloadMass)
             {
-                RocketName = rocketName;
+                Name = rocketName;
                 ID = id;
                 StageList = stageList;
                 PayloadMass = payloadMass;
@@ -311,7 +311,7 @@ namespace KSP_Library
                 }
                 StringBuilder rocketString = new StringBuilder(
                     "------------ Rocket ------------\n\n" +
-                    RocketName +
+                    Name +
                     ":\nID = " + ID +
                     "\nNo. of Stages = " + StageList.Count.ToString() +
                     "\nTotal Δv = " + deltaV +
