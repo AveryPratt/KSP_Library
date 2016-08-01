@@ -22,7 +22,7 @@ namespace KSP_Library
                     AtmosphereHeight = 600000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 432000
+                    SidRotPeriod = 432000
                 };
 
                 Bodies[1] = new OrbitingBody
@@ -33,7 +33,7 @@ namespace KSP_Library
                     GM = 168609380000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 1210000,
+                    SidRotPeriod = 1210000,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 5263138304,
@@ -53,7 +53,7 @@ namespace KSP_Library
                     AtmosphereHeight = 90000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 80500,
+                    SidRotPeriod = 80500,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 9832684544,
@@ -72,7 +72,7 @@ namespace KSP_Library
                     GM = 8289450, //49.8
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 28255,
+                    SidRotPeriod = 28255,
 
                     ParentBody = Bodies[2],
                     SemiMajorAxis = 31500000,
@@ -92,7 +92,7 @@ namespace KSP_Library
                     AtmosphereHeight = 70000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 21549.425,
+                    SidRotPeriod = 21549.425,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 13599840256,
@@ -111,7 +111,7 @@ namespace KSP_Library
                     GM = 65138398000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 138984.38,
+                    SidRotPeriod = 138984.38,
 
                     ParentBody = Bodies[4],
                     SemiMajorAxis = 12000000,
@@ -130,7 +130,7 @@ namespace KSP_Library
                     GM = 1765800000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 40400,
+                    SidRotPeriod = 40400,
 
                     ParentBody = Bodies[4],
                     SemiMajorAxis = 47000000,
@@ -150,7 +150,7 @@ namespace KSP_Library
                     AtmosphereHeight = 50000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 65517.859,
+                    SidRotPeriod = 65517.859,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 20726155264,
@@ -169,7 +169,7 @@ namespace KSP_Library
                     GM = 18568369000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 65517.862,
+                    SidRotPeriod = 65517.862,
 
                     ParentBody = Bodies[7],
                     SemiMajorAxis = 3200000,
@@ -188,7 +188,7 @@ namespace KSP_Library
                     GM = 21484489000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 34800,
+                    SidRotPeriod = 34800,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 40839348203,
@@ -208,7 +208,7 @@ namespace KSP_Library
                     AtmosphereHeight = 200000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 36000,
+                    SidRotPeriod = 36000,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 68773560320,
@@ -228,7 +228,7 @@ namespace KSP_Library
                     AtmosphereHeight = 50000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 52980.879,
+                    SidRotPeriod = 52980.879,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 27184000,
@@ -247,7 +247,7 @@ namespace KSP_Library
                     GM = 207481500000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 105962.09,
+                    SidRotPeriod = 105962.09,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 43152000,
@@ -266,7 +266,7 @@ namespace KSP_Library
                     GM = 2825280000000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 211926.36,
+                    SidRotPeriod = 211926.36,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 68500000,
@@ -285,7 +285,7 @@ namespace KSP_Library
                     GM = 2486834900,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 544507.43,
+                    SidRotPeriod = 544507.43,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 128500000,
@@ -304,7 +304,7 @@ namespace KSP_Library
                     GM = 721702080,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 901902.62,
+                    SidRotPeriod = 901902.62,
 
                     ParentBody = Bodies[10],
                     SemiMajorAxis = 179890000,
@@ -323,7 +323,7 @@ namespace KSP_Library
                     GM = 74410815000,
                     NPRightAsc = 0,
                     NPDeclination = 0,
-                    RotPeriod = 19460,
+                    SidRotPeriod = 19460,
 
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 90118820000,

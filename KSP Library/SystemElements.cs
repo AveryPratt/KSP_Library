@@ -60,7 +60,7 @@ namespace KSP_Library
         public int AtmosphereHeight { get; set; }
         public double NPRightAsc { get; set; }
         public double NPDeclination { get; set; }
-        public double RotPeriod { get; set; }
+        public double SidRotPeriod { get; set; }
     }
 
     public class OrbitingObject : IOrbital
