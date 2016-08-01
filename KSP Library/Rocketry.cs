@@ -9,7 +9,7 @@ namespace KSP_Library
 {
     namespace Rocketry
     {
-        public class Rocket : OrbitingBody
+        public class Rocket : OrbitingObject
         {
             // properties
             public List<Stage> StageList { get; set; }
