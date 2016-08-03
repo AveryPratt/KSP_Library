@@ -325,23 +325,30 @@ namespace KSP_Library
             }
             public override bool Equals(object obj)
             {
-                if (obj == null)
+                //if (obj == null)
+                //{
+                //    return false;
+                //}
+                //else if (!(obj is Rocket))
+                //{
+                //    return false;
+                //}
+                //else if (ID != ((Rocket)obj).ID)
+                //{
+                //    return false;
+                //}
+                //else return true;
+                if (((Rocket)obj).GetHashCode() == this.GetHashCode())
                 {
-                    return false;
+                    return true;
                 }
-                else if (!(obj is Rocket))
-                {
-                    return false;
-                }
-                else if (ID != ((Rocket)obj).ID)
-                {
-                    return false;
-                }
-                else return true;
+                else return false;
             }
             public override int GetHashCode()
             {
-                return ID.GetHashCode();
+                int newHash = PayloadMass.GetHashCode();
+                newHash ^= StageList.GetHashCode();
+                return newHash;
             }
         }
 

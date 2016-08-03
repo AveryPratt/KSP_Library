@@ -12,6 +12,7 @@ namespace KSP_Library
         {
             public KerbolOuterPlanetsSystem()
             {
+                Bodies = new Body[32];
                 Bodies[0] = new Star
                 {
                     ID = 1,

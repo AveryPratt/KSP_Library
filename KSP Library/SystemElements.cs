@@ -29,12 +29,24 @@ namespace KSP_Library
             return Bodies[bodyIndex];
         }
 
+        public override int GetHashCode()
+        {
+            return Bodies.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            if (((SolarSystem)obj).GetHashCode() == this.GetHashCode())
+            {
+                return true;
+            }
+            else return false;
+        }
         public override string ToString()
         {
             StringBuilder bodyNames = new StringBuilder();
             foreach(Body body in Bodies)
             {
-                bodyNames.Append(body.ToString());
+                bodyNames.Append(body.ToString() + "\n");
             }
             return bodyNames.ToString();
         }
@@ -50,7 +62,6 @@ namespace KSP_Library
         double ArgPer { get; set; }
         double LongAsc { get; set; }
     }
-
     public abstract class Body
     {
         public int ID { get; set; }
@@ -61,8 +72,31 @@ namespace KSP_Library
         public double NPRightAsc { get; set; }
         public double NPDeclination { get; set; }
         public double SidRotPeriod { get; set; }
-    }
 
+        // overrides
+        public override bool Equals(object obj)
+        {
+            if (((Body)obj).GetHashCode() == this.GetHashCode())
+            {
+                return true;
+            }
+            else return false;
+        }
+        public override int GetHashCode()
+        {
+            int newHash = GM.GetHashCode();
+            newHash ^= Radius.GetHashCode();
+            newHash ^= AtmosphereHeight.GetHashCode();
+            newHash ^= NPRightAsc.GetHashCode();
+            newHash ^= NPDeclination.GetHashCode();
+            newHash ^= SidRotPeriod.GetHashCode();
+            return newHash;
+        }
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
     public class OrbitingObject : IOrbital
     {
         public int ID { get; set; }
@@ -74,7 +108,6 @@ namespace KSP_Library
         public double ArgPer { get; set; }
         public double LongAsc { get; set; }
     }
-
     public class OrbitingBody : Body, IOrbital
     {
         public Body ParentBody { get; set; }
@@ -90,12 +123,10 @@ namespace KSP_Library
 
         }
     }
-
     public class Star : Body
     {
         new public BigInteger GM { get; set; }
     }
-
     public struct BigGM
     {
         public static BigInteger ENotation(double value, double displacement)
