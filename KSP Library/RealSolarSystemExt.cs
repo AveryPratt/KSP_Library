@@ -13,6 +13,7 @@ namespace KSP_Library
         {
             public RealSolarSystemExt()
             {
+                Bodies = new Body[41];
                 Bodies[0] = new Star
                 {
                     Name = "SUN",
