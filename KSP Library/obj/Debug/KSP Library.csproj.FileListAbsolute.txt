@@ -3,3 +3,8 @@ C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\KSP Library\KS
 C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.dll
 C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.pdb
 C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.csprojResolveAssemblyReference.cache
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.csprojResolveAssemblyReference.cache
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.dll
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\KSP Library\KSP Library\obj\Debug\KSP Library.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\KSP Library\KSP Library\bin\Debug\KSP Library.dll
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\KSP Library\KSP Library\bin\Debug\KSP Library.pdb
