@@ -21,8 +21,8 @@ namespace KSP_Library
                     GM = BigGM.ENotation(1.1723328, 18),
                     //GM = 1172332800000000000
                     AtmosphereHeight = 600000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 432000
                 };
 
@@ -32,8 +32,8 @@ namespace KSP_Library
                     Name = "MOHO",
                     Radius = 250000,
                     GM = 168609380000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 1210000,
 
                     ParentBody = Bodies[0],
@@ -52,8 +52,8 @@ namespace KSP_Library
                     Radius = 700000,
                     GM = 8171730200000,
                     AtmosphereHeight = 90000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 80500,
 
                     ParentBody = Bodies[0],
@@ -71,8 +71,8 @@ namespace KSP_Library
                     Name = "GILLY",
                     Radius = 13000,
                     GM = 8289450, //49.8
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 28255,
 
                     ParentBody = Bodies[2],
@@ -91,8 +91,8 @@ namespace KSP_Library
                     Radius = 600000,
                     GM = 3531600000000,
                     AtmosphereHeight = 70000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 21549.425,
 
                     ParentBody = Bodies[0],
@@ -110,8 +110,8 @@ namespace KSP_Library
                     Name = "MUN",
                     Radius = 200000,
                     GM = 65138398000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 138984.38,
 
                     ParentBody = Bodies[4],
@@ -129,8 +129,8 @@ namespace KSP_Library
                     Name = "MINMUS",
                     Radius = 60000,
                     GM = 1765800000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 40400,
 
                     ParentBody = Bodies[4],
@@ -149,8 +149,8 @@ namespace KSP_Library
                     Radius = 320000,
                     GM = 301363210000,
                     AtmosphereHeight = 50000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 65517.859,
 
                     ParentBody = Bodies[0],
@@ -168,8 +168,8 @@ namespace KSP_Library
                     Name = "IKE",
                     Radius = 130000,
                     GM = 18568369000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 65517.862,
 
                     ParentBody = Bodies[7],
@@ -187,8 +187,8 @@ namespace KSP_Library
                     Name = "DRES",
                     Radius = 138000,
                     GM = 21484489000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 34800,
 
                     ParentBody = Bodies[0],
@@ -207,8 +207,8 @@ namespace KSP_Library
                     Radius = 6000000,
                     GM = 282528000000000,
                     AtmosphereHeight = 200000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 36000,
 
                     ParentBody = Bodies[0],
@@ -227,8 +227,8 @@ namespace KSP_Library
                     Radius = 500000,
                     GM = 1962000000000,
                     AtmosphereHeight = 50000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 52980.879,
 
                     ParentBody = Bodies[10],
@@ -246,8 +246,8 @@ namespace KSP_Library
                     Name = "VALL",
                     Radius = 300000,
                     GM = 207481500000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 105962.09,
 
                     ParentBody = Bodies[10],
@@ -265,8 +265,8 @@ namespace KSP_Library
                     Name = "TYLO",
                     Radius = 600000,
                     GM = 2825280000000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 211926.36,
 
                     ParentBody = Bodies[10],
@@ -284,8 +284,8 @@ namespace KSP_Library
                     Name = "BOP",
                     Radius = 65000,
                     GM = 2486834900,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 544507.43,
 
                     ParentBody = Bodies[10],
@@ -303,8 +303,8 @@ namespace KSP_Library
                     Name = "POL",
                     Radius = 44000,
                     GM = 721702080,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 901902.62,
 
                     ParentBody = Bodies[10],
@@ -322,8 +322,8 @@ namespace KSP_Library
                     Name = "EELOO",
                     Radius = 210000,
                     GM = 74410815000,
-                    NPRightAsc = 0,
-                    NPDeclination = 0,
+                    NPRA = 0,
+                    NPDecl = 0,
                     SidRotPeriod = 19460,
 
                     ParentBody = Bodies[0],
