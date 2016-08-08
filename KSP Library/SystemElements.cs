@@ -52,33 +52,49 @@ namespace KSP_Library
     }
     public class Plane
     {
-        public double RA { get; set; }
-        public double Decl { get; set; }
+        public double NPRA { get; set; }
+        public double NPDecl { get; set; }
+        public double RefRA { get; set; }
+        public double RefDecl { get; set; }
 
         public Plane RefPlane { get; set; }
         public double Inclination { get; set; }
         public double LongAsc { get; set; }
 
         // constructors
-        Plane(double ra, double decl)
+        Plane(double npra, double npdecl, double refra, double refdecl)
         {
-            RA = ra;
-            Decl = decl;
+            NPRA = npra;
+            NPDecl = npdecl;
+            RefRA = refra;
+            RefDecl = refdecl;
         }
-        Plane(double ra, double decl, Plane refPlane)
+        Plane(Plane refPlane, double npra, double npdecl)
         {
-            RA = ra;
-            Decl = decl;
+            NPRA = npra;
+            NPDecl = npdecl;
             RefPlane = refPlane;
+            setElements();
         }
-        private void getElements(double ra, double decl, Plane refPlane)
+        Plane(double incl, double longAsc, Plane refPlane)
         {
-            //Inclination = Math.Sqrt(ra * ra + refPlane.RA * refPlane.RA - 2 * ra * refPlane.RA * Math.Cos(refPlane.Decl - decl));
+            Inclination = incl;
+            LongAsc = longAsc;
+            RefPlane = refPlane;
+            setCoordinates();
         }
-        private void getCoordinates(double inclination, double longAsc, Plane refPlane)
+        private void setElements()
         {
-            //RA = (inclination * inclination);
-            //Decl = 
+            Inclination = Math.Sqrt(Math.Pow(NPRA, 2) + Math.Pow(RefPlane.NPRA, 2) - 2 * NPRA * RefPlane.NPRA * Math.Cos(RefPlane.NPDecl - NPDecl));
+            //LongAsc = Math.Sqrt(Math.Pow(RefRA, 2) + Math.Pow(RefPlane.RefRA, 2) - 2 * RefRA * RefPlane.RefRA * Math.Cos(RefPlane.RefDecl - RefDecl));
+            LongAsc = Math.Cos(Math.Sqrt(Math.Pow(RefRA, 2) + Math.Pow(RefPlane.RefRA, 2) - 2 * RefRA * RefPlane.RefRA * Math.Cos(RefPlane.RefDecl - RefDecl)));
+        }
+        private void setCoordinates()
+        {
+            NPRA =
+            NPDecl =
+            RefRA =
+            RefDecl =
         }
     }
     public interface IOrbital
