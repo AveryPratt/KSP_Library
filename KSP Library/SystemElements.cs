@@ -54,20 +54,20 @@ namespace KSP_Library
     {
         public double NPRA { get; set; }
         public double NPDecl { get; set; }
-        public double RefRA { get; set; }
-        public double RefDecl { get; set; }
+        public double FixedRA { get; set; }
+        public double FixedDecl { get; set; }
 
         public Plane RefPlane { get; set; }
         public double Inclination { get; set; }
         public double LongAsc { get; set; }
 
         // constructors
-        Plane(double npra, double npdecl, double refra, double refdecl)
+        Plane(double npra, double npdecl, double fixedra, double fixeddecl)
         {
             NPRA = npra;
             NPDecl = npdecl;
-            RefRA = refra;
-            RefDecl = refdecl;
+            FixedRA = fixedra;
+            FixedDecl = fixeddecl;
         }
         Plane(Plane refPlane, double npra, double npdecl)
         {
@@ -85,16 +85,30 @@ namespace KSP_Library
         }
         private void setElements()
         {
-            Inclination = Math.Sqrt(Math.Pow(NPRA, 2) + Math.Pow(RefPlane.NPRA, 2) - 2 * NPRA * RefPlane.NPRA * Math.Cos(RefPlane.NPDecl - NPDecl));
-            //LongAsc = Math.Sqrt(Math.Pow(RefRA, 2) + Math.Pow(RefPlane.RefRA, 2) - 2 * RefRA * RefPlane.RefRA * Math.Cos(RefPlane.RefDecl - RefDecl));
-            LongAsc = Math.Cos(Math.Sqrt(Math.Pow(RefRA, 2) + Math.Pow(RefPlane.RefRA, 2) - 2 * RefRA * RefPlane.RefRA * Math.Cos(RefPlane.RefDecl - RefDecl)));
+            double radNPRA = convertDegToRad(NPRA);
+            double radNPDecl = convertDegToRad(NPDecl);
+            double radRefNPRA = convertDegToRad(RefPlane.NPRA);
+            double radRefNPDecl = convertDegToRad(RefPlane.NPDecl);
+            double radFixRA = convertDegToRad(FixedRA);
+            double radFixDecl = convertDegToRad(FixedDecl);
+            Inclination = Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl));
+            //LongAsc = Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl));
+            LongAsc = Math.Cos(Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl)));
         }
         private void setCoordinates()
         {
-            NPRA =
-            NPDecl =
-            RefRA =
-            RefDecl =
+            NPRA = convertRadToDeg();
+            NPDecl = convertRadToDeg();
+            FixedRA = convertRadToDeg();
+            FixedDecl = convertRadToDeg();
+        }
+        private double convertDegToRad(double deg)
+        {
+            return (deg / 360) * Math.PI;
+        }
+        private double convertRadToDeg(double rad)
+        {
+            return (rad / Math.PI) * 360;
         }
     }
     public interface IOrbital
