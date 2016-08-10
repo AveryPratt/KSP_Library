@@ -93,7 +93,7 @@ namespace KSP_Library
                     GM = 398600441800000,
                     SidRotPeriod = 0.99726968,
 
-                    EqPlane = new Plane(0, 90, 0, 0),
+                    EqPlane = new Plane(),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
