@@ -62,6 +62,13 @@ namespace KSP_Library
         public double LongAsc { get; set; }
 
         // constructors
+        public Plane()
+        {
+            NPRA = 0;
+            NPDecl = 90;
+            FixedRA = 0;
+            FixedDecl = 0;
+        }
         public Plane(double npRA, double npDecl, double fixedRA, double fixedDecl)
         {
             NPRA = npRA;
@@ -112,10 +119,10 @@ namespace KSP_Library
             double relativeFixedRA = LongAsc;
             double relativeFixedDecl = 0;
             double obl = Inclination;
-            NPRA = translateRA(relativeNPRA, relativeNPDecl, obl);
-            NPDecl = translateDecl(relativeNPRA, relativeNPDecl, obl);
-            FixedRA = translateRA(relativeFixedRA, relativeFixedDecl, obl);
-            FixedDecl = translateDecl(relativeFixedRA, relativeFixedDecl, obl);
+            NPRA = convertRadToDeg(translateRA(relativeNPRA, relativeNPDecl, obl));
+            NPDecl = convertRadToDeg(translateDecl(relativeNPRA, relativeNPDecl, obl));
+            FixedRA = convertRadToDeg(translateRA(relativeFixedRA, relativeFixedDecl, obl));
+            FixedDecl = convertRadToDeg(translateDecl(relativeFixedRA, relativeFixedDecl, obl));
         }
         private double translateRA(double ra, double decl, double obl)
         {

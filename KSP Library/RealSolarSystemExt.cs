@@ -36,8 +36,6 @@ namespace KSP_Library
                     LongAsc = 48.331,
 
                     //AxialTilt = .034,
-                    NPRA = 281.01,
-                    NPDecl = 61.45
                 };
 
                 Bodies[2] = new OrbitingBody
@@ -54,8 +52,6 @@ namespace KSP_Library
                     LongAsc = 76.680,
 
                     //AxialTilt = 177.36,
-                    NPRA = 272.76,
-                    NPDecl = 67.16
                 };
 
                 Bodies[3] = new OrbitingBody
@@ -72,8 +68,6 @@ namespace KSP_Library
                     LongAsc = 348.73936, //-11.26064
 
                     //AxialTilt = 23.4392811,
-                    NPRA = 0,
-                    NPDecl = 0
                 };
 
                 Bodies[4] = new OrbitingBody
@@ -102,8 +96,6 @@ namespace KSP_Library
                     LongAsc = 49.558,
 
                     //AxialTilt = 25.19,
-                    NPRA = 317.68143,
-                    NPDecl = 52.88650
                 };
 
                 Bodies[6] = new OrbitingBody
@@ -214,8 +206,6 @@ namespace KSP_Library
                     LongAsc = 100.464,
 
                     //AxialTilt = 3.13,
-                    NPRA = 268.057,
-                    NPDecl = 64.496
                 };
 
                 Bodies[9] = new OrbitingBody
@@ -280,8 +270,6 @@ namespace KSP_Library
                     LongAsc = 113.665,
 
                     //AxialTilt = 26.73,
-                    NPRA = 40.589,
-                    NPDecl = 83.537
                 };
 
                 Bodies[14] = new OrbitingBody
@@ -383,8 +371,6 @@ namespace KSP_Library
                     LongAsc = 74.006,
 
                     //AxialTilt = 97.77,
-                    NPRA = 257.311,
-                    NPDecl = -15.175
                 };
 
                 Bodies[22] = new OrbitingBody
@@ -461,8 +447,6 @@ namespace KSP_Library
                     LongAsc = 131.784,
 
                     //AxialTilt = 28.32,
-                    NPRA = 299.3,
-                    NPDecl = 42.950
                 };
 
                 Bodies[28] = new OrbitingBody
@@ -504,8 +488,6 @@ namespace KSP_Library
                     LongAsc = 110.299,
 
                     //AxialTilt = 119.591,
-                    NPRA = 132.993,
-                    NPDecl = -6.163
                 };
 
                 Bodies[31] = new OrbitingBody
