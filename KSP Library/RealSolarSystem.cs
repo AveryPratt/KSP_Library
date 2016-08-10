@@ -72,10 +72,10 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 108208000000,
-                    Eccentricity = .006772,
+                    SemiMajorAxis = 108209474537,
+                    Eccentricity = 0.00677672,
                     Inclination = 3.39467605,
-                    ArgPer = 54.884,
+                    ArgPer = 54.92262463,
                     LongAsc = 76.67984255,
 
                     OrbitalPlane = new Plane(
@@ -193,6 +193,7 @@ namespace KSP_Library
                     Name = "JUPITER",
                     Radius = 69911000,
                     GM = 126686534000000000,
+                    SidRotPeriod = 35729.856,
 
                     EqPlane = new Plane(
                     ((Star)Bodies[0]).ReferencePlane,
@@ -202,11 +203,11 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 778299000000,
-                    Eccentricity = .048498,
-                    Inclination = 1.30439695, // to ecliptic
-                    ArgPer = 273.867,
-                    LongAsc = 100.464,
+                    SemiMajorAxis = 778340817000,
+                    Eccentricity = 0.04838624,
+                    Inclination = 1.30439695,
+                    ArgPer = 274.25457074,
+                    LongAsc = 100.47390909,
 
                     OrbitalPlane = new Plane(
                     ((OrbitingBody)Bodies[8]).LongAsc,
@@ -273,6 +274,7 @@ namespace KSP_Library
                     Name = "SATURN",
                     Radius = 58232000,
                     GM = 37931187000000000,
+                    SidRotPeriod = 38362.464,
 
                     EqPlane = new Plane(
                     ((Star)Bodies[0]).ReferencePlane,
@@ -282,11 +284,11 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 1429390000000,
-                    Eccentricity = .05555,
-                    Inclination = 2.485240,
-                    ArgPer = 339.392,
-                    LongAsc = 113.665,
+                    SemiMajorAxis = 1426666414180,
+                    Eccentricity = 0.05386179,
+                    Inclination = 2.48599187,
+                    ArgPer = 338.93645383,
+                    LongAsc = 113.66242448,
 
                     OrbitalPlane = new Plane(
                     ((OrbitingBody)Bodies[13]).LongAsc,
@@ -400,6 +402,7 @@ namespace KSP_Library
                     Name = "URANUS",
                     Radius = 25362000,
                     GM = 5793939000000000,
+                    SidRotPeriod = -62063.712,
 
                     EqPlane = new Plane(
                     ((Star)Bodies[0]).ReferencePlane,
@@ -409,11 +412,11 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 2875040000000,
-                    Eccentricity = .046381,
-                    Inclination = .773,
-                    ArgPer = 96.998857,
-                    LongAsc = 74.006,
+                    SemiMajorAxis = 2870658170656,
+                    Eccentricity = 0.04725744,
+                    Inclination = 0.77263783,
+                    ArgPer = 96.93735127,
+                    LongAsc = 74.01692503,
 
                     OrbitalPlane = new Plane(
                     ((OrbitingBody)Bodies[21]).LongAsc,
@@ -498,6 +501,7 @@ namespace KSP_Library
                     Name = "NEPTUNE",
                     Radius = 24622000,
                     GM = 6836529000000000,
+                    SidRotPeriod = 57996,
 
                     EqPlane = new Plane(
                     ((Star)Bodies[0]).ReferencePlane,
@@ -507,11 +511,11 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 4504450000000,
-                    Eccentricity = .009456,
-                    Inclination = 1.767975,
-                    ArgPer = 276.336,
-                    LongAsc = 131.784,
+                    SemiMajorAxis = 4498396417010,
+                    Eccentricity = 0.00859048,
+                    Inclination = 1.77004347,
+                    ArgPer = 276.18053653,
+                    LongAsc = 131.78422574,
 
                     OrbitalPlane = new Plane(
                     ((OrbitingBody)Bodies[27]).LongAsc,
@@ -570,6 +574,7 @@ namespace KSP_Library
                     Name = "PLUTO",
                     Radius = 1187000,
                     GM = 871000000000,
+                    SidRotPeriod = -6.3872,
 
                     EqPlane = new Plane(
                     ((Star)Bodies[0]).ReferencePlane,
@@ -579,11 +584,11 @@ namespace KSP_Library
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 5915000000000,
-                    Eccentricity = .24905,
-                    Inclination = 17.1405,
-                    ArgPer = 113.834,
-                    LongAsc = 110.299,
+                    SemiMajorAxis = 5906440596529,
+                    Eccentricity = 0.24882730,
+                    Inclination = 17.14001206,
+                    ArgPer = 113.76497945,
+                    LongAsc = 110.30393684,
 
                     OrbitalPlane = new Plane(
                     ((OrbitingBody)Bodies[27]).LongAsc,
