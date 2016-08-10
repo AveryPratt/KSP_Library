@@ -62,27 +62,28 @@ namespace KSP_Library
         public double LongAsc { get; set; }
 
         // constructors
-        Plane(double npra, double npdecl, double fixedra, double fixeddecl)
+        public Plane(double npRA, double npDecl, double fixedRA, double fixedDecl)
         {
-            NPRA = npra;
-            NPDecl = npdecl;
-            FixedRA = fixedra;
-            FixedDecl = fixeddecl;
+            NPRA = npRA;
+            NPDecl = npDecl;
+            FixedRA = fixedRA;
+            FixedDecl = fixedDecl;
         }
-        Plane(Plane refPlane, double npra, double npdecl)
+        public Plane(Plane refPlane, double npRA, double npDecl)
         {
-            NPRA = npra;
-            NPDecl = npdecl;
+            NPRA = npRA;
+            NPDecl = npDecl;
             RefPlane = refPlane;
             setElements();
         }
-        Plane(double incl, double longAsc, Plane refPlane)
+        public Plane(double longAsc, double incl, Plane refPlane)
         {
             Inclination = incl;
             LongAsc = longAsc;
             RefPlane = refPlane;
             setCoordinates();
         }
+
         private void setElements()
         {
             double radNPRA = convertDegToRad(NPRA);
@@ -91,16 +92,9 @@ namespace KSP_Library
             double radRefNPDecl = convertDegToRad(RefPlane.NPDecl);
             double radFixRA = convertDegToRad(FixedRA);
             double radFixDecl = convertDegToRad(FixedDecl);
-            Inclination = Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl));
+            Inclination = convertRadToDeg(Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl)));
             //LongAsc = Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl));
-            LongAsc = Math.Cos(Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl)));
-        }
-        private void setCoordinates()
-        {
-            NPRA = convertRadToDeg();
-            NPDecl = convertRadToDeg();
-            FixedRA = convertRadToDeg();
-            FixedDecl = convertRadToDeg();
+            LongAsc = convertRadToDeg(Math.Cos(Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl))));
         }
         private double convertDegToRad(double deg)
         {
@@ -109,6 +103,27 @@ namespace KSP_Library
         private double convertRadToDeg(double rad)
         {
             return (rad / Math.PI) * 360;
+        }
+
+        private void setCoordinates()
+        {
+            double relativeNPRA = 90 - LongAsc;
+            double relativeNPDecl = 90 - Inclination;
+            double relativeFixedRA = LongAsc;
+            double relativeFixedDecl = 0;
+            double obl = Inclination;
+            NPRA = translateRA(relativeNPRA, relativeNPDecl, obl);
+            NPDecl = translateDecl(relativeNPRA, relativeNPDecl, obl);
+            FixedRA = translateRA(relativeFixedRA, relativeFixedDecl, obl);
+            FixedDecl = translateDecl(relativeFixedRA, relativeFixedDecl, obl);
+        }
+        private double translateRA(double ra, double decl, double obl)
+        {
+            return Math.Atan(Math.Sin(ra) * Math.Cos(obl) - Math.Tan(decl) * Math.Sin(obl) / Math.Cos(ra));
+        }
+        private double translateDecl(double ra, double decl, double obl)
+        {
+            return Math.Asin(Math.Sin(decl) * Math.Cos(obl) + Math.Cos(decl) * Math.Sin(obl) * Math.Sin(ra));
         }
     }
     public interface IOrbital
@@ -184,8 +199,7 @@ namespace KSP_Library
     }
     public class Star : Body
     {
-        public Plane EclipticPlane { get; set; }
-        public Plane InvarPlane { get; set; }
+        public Plane ReferencePlane { get; set; }
         new public BigInteger GM { get; set; }
     }
     public struct BigGM

@@ -16,75 +16,108 @@ namespace KSP_Library
                 Bodies = new Body[32];
                 Bodies[0] = new Star
                 {
+                    // physical characteristics
                     Name = "SUN",
                     Radius = 695700000,
                     GM = BigGM.ENotation(1.32712440018, 20),
-                    NPRA = 286.13,
-                    NPDecl = 63.87,
-                    SidRotPeriod = 2164320 // at equator
+                    SidRotPeriod = 2164320, // at equator
                     //GM = 132712440018000000000
+                    
+                    ReferencePlane = new Plane(270, 23.439291, 0, 0),
+                    EqPlane = new Plane(((Star)Bodies[0]).ReferencePlane, 286.13, 63.87),
                 };
 
                 Bodies[1] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "MERCURY",
-                    Radius = 2440000,
+                    Radius = 2439700,
                     GM = 22032000000000,
-                    NPRA = 281.01,
-                    NPDecl = 61.45,
-                    SidRotPeriod = 5067014.4,
+                    SidRotPeriod = 5067031.68,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    281.01,
+                    61.41
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 57909050000,
-                    Eccentricity = .205630,
-                    Inclination = 7.005,
-                    ArgPer = 29.124,
-                    LongAsc = 48.331
+                    SemiMajorAxis = 57909226542,
+                    Eccentricity = 0.20563593,
+                    Inclination = 7.00497902,
+                    ArgPer = 29.12703035,
+                    LongAsc = 48.33076593,
 
-                    //AxialTilt = .034,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[1]).LongAsc, 
+                    ((OrbitingBody)Bodies[1]).Inclination, 
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[2] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "VENUS",
-                    Radius = 6052000,
+                    Radius = 6051800,
                     GM = 324859000000000,
-                    NPRA = 272.76,
-                    NPDecl = 67.16,
-                    SidRotPeriod = 1210000,
+                    SidRotPeriod = -20996755.2,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    272.76, //92.76 for counterclockwise pole
+                    67.16 //-67.16 for counterclockwise pole
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 108208000000,
                     Eccentricity = .006772,
-                    Inclination = 3.39458,
+                    Inclination = 3.39467605,
                     ArgPer = 54.884,
-                    LongAsc = 76.680
+                    LongAsc = 76.67984255,
 
-                    //AxialTilt = 177.36,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[2]).LongAsc,
+                    ((OrbitingBody)Bodies[2]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[3] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "EARTH",
-                    Radius = 6374327,
+                    Radius = 6374327, //6371000avg
                     GM = 398600441800000,
+                    SidRotPeriod = 0.99726968,
 
+                    EqPlane = new Plane(0, 90, 0, 0),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 149598023000,
-                    Eccentricity = .0167086,
+                    SemiMajorAxis = 149598261150,
+                    Eccentricity = 0.01671123,
                     Inclination = 0,
-                    ArgPer = 114.20783,
-                    LongAsc = 348.73936 //-11.26064
+                    ArgPer = 102.93768193,
+                    LongAsc = 0,
 
-                    //AxialTilt = 23.4392811,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[3]).LongAsc,
+                    ((OrbitingBody)Bodies[3]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[4] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "MOON",
                     Radius = 1737000,
                     GM = 4904869500000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[3],
                     SemiMajorAxis = 384399000,
                     Eccentricity = .0549,
@@ -93,25 +126,36 @@ namespace KSP_Library
 
                 Bodies[5] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "MARS",
-                    Radius = 3390000,
+                    Radius = 3389500,
                     GM = 42828370000000,
-                    NPRA = 317.68143,
-                    NPDecl = 52.88650,
-                    SidRotPeriod = 88642,
+                    SidRotPeriod = 88642.664064,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    317.68,
+                    52.89
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
-                    SemiMajorAxis = 227939200000,
-                    Eccentricity = .0934,
-                    Inclination = 1.850,
-                    ArgPer = 286.502,
-                    LongAsc = 49.558
+                    SemiMajorAxis = 227943822428,
+                    Eccentricity = 0.09339410,
+                    Inclination = 1.84969142,
+                    ArgPer = 286.4968315,
+                    LongAsc = 49.55953891,
 
-                    //AxialTilt = 25.19,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[5]).LongAsc,
+                    ((OrbitingBody)Bodies[5]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[6] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "PHOBOS",
                     Radius = 11266,
                     GM = 711390,
@@ -119,6 +163,7 @@ namespace KSP_Library
                     //NPDeclination = 52.88650,
                     SidRotPeriod = 27553.843872,
 
+                    // orbital characteristics
                     ParentBody = Bodies[5],
                     SemiMajorAxis = 9376000,
                     Eccentricity = .0151,
@@ -127,6 +172,7 @@ namespace KSP_Library
 
                 Bodies[7] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "DEIMOS",
                     Radius = 6200,
                     GM = 98523,
@@ -134,6 +180,7 @@ namespace KSP_Library
                     //NPDeclination = 52.88650,
                     SidRotPeriod = 109123.2,
 
+                    // orbital characteristics
                     ParentBody = Bodies[5],
                     SemiMajorAxis = 23463200,
                     Eccentricity = .00033,
@@ -142,28 +189,40 @@ namespace KSP_Library
 
                 Bodies[8] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "JUPITER",
                     Radius = 69911000,
                     GM = 126686534000000000,
-                    NPRA = 268.057,
-                    NPDecl = 64.496,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    268.06,
+                    64.50
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 778299000000,
                     Eccentricity = .048498,
-                    Inclination = 1.303, // to ecliptic
+                    Inclination = 1.30439695, // to ecliptic
                     ArgPer = 273.867,
-                    LongAsc = 100.464
+                    LongAsc = 100.464,
 
-                    //AxialTilt = 3.13,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[8]).LongAsc,
+                    ((OrbitingBody)Bodies[8]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[9] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "IO",
                     Radius = 1821600,
                     GM = 5961246900000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 57909050000,
                     Eccentricity = .0041,
@@ -171,10 +230,12 @@ namespace KSP_Library
 
                 Bodies[10] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "EUROPA",
                     Radius = 1560800,
                     GM = 3203454300000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 670900000,
                     Eccentricity = .009,
@@ -182,10 +243,12 @@ namespace KSP_Library
 
                 Bodies[11] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "GANYMEDE",
                     Radius = 2634100,
                     GM = 9890319200000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 1070400000,
                     Eccentricity = .0013,
@@ -193,10 +256,12 @@ namespace KSP_Library
 
                 Bodies[12] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "CALLISTO",
                     Radius = 2410300,
                     GM = 7180896300000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[8],
                     SemiMajorAxis = 1882700000,
                     Eccentricity = .0074,
@@ -204,28 +269,40 @@ namespace KSP_Library
 
                 Bodies[13] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "SATURN",
                     Radius = 58232000,
                     GM = 37931187000000000,
-                    NPRA = 40.589,
-                    NPDecl = 83.537,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    40.60,
+                    83.54
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 1429390000000,
                     Eccentricity = .05555,
                     Inclination = 2.485240,
                     ArgPer = 339.392,
-                    LongAsc = 113.665
+                    LongAsc = 113.665,
 
-                    //AxialTilt = 26.73,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[13]).LongAsc,
+                    ((OrbitingBody)Bodies[13]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[14] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "MIMAS",
                     Radius = 198200,
                     GM = 2502312814,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 185539000,
                     Eccentricity = .0196,
@@ -234,10 +311,12 @@ namespace KSP_Library
 
                 Bodies[15] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "ENCELADUS",
                     Radius = 252100,
                     GM = 7209474698,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 237948000,
                     Eccentricity = .0047,
@@ -246,10 +325,12 @@ namespace KSP_Library
 
                 Bodies[16] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "TETHYS",
                     Radius = 531100,
                     GM = 41209040219,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 294619000,
                     Eccentricity = .0001,
@@ -258,10 +339,12 @@ namespace KSP_Library
 
                 Bodies[17] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "DIONE",
                     Radius = 561400,
                     GM = 73111342842,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 377396000,
                     Eccentricity = .0022,
@@ -270,10 +353,12 @@ namespace KSP_Library
 
                 Bodies[18] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "RHEA",
                     Radius = 763800,
                     GM = 153938856534,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 527108000,
                     Eccentricity = .0012583,
@@ -282,10 +367,12 @@ namespace KSP_Library
 
                 Bodies[19] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "TITAN",
                     Radius = 2575500,
                     GM = 8977972400000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 1221870000,
                     Eccentricity = .0288,
@@ -294,10 +381,12 @@ namespace KSP_Library
 
                 Bodies[20] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "IAPETUS",
                     Radius = 734500,
                     GM = 120509524408,
 
+                    // orbital characteristics
                     ParentBody = Bodies[13],
                     SemiMajorAxis = 3560820000,
                     Eccentricity = .0286125,
@@ -307,28 +396,40 @@ namespace KSP_Library
 
                 Bodies[21] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "URANUS",
                     Radius = 25362000,
                     GM = 5793939000000000,
-                    NPRA = 257.311,
-                    NPDecl = -15.175,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    257.31,
+                    -15.18
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 2875040000000,
                     Eccentricity = .046381,
                     Inclination = .773,
                     ArgPer = 96.998857,
-                    LongAsc = 74.006
+                    LongAsc = 74.006,
 
-                    //AxialTilt = 97.77,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[21]).LongAsc,
+                    ((OrbitingBody)Bodies[21]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[22] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "MIRANDA",
                     Radius = 235800,
                     GM = 4398218720,
 
+                    // orbital characteristics
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 129390000,
                     Eccentricity = .0013,
@@ -337,10 +438,12 @@ namespace KSP_Library
 
                 Bodies[23] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "ARIEL",
                     Radius = 578900,
                     GM = 90300302400,
 
+                    // orbital characteristics
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 191020000,
                     Eccentricity = .0012,
@@ -349,10 +452,12 @@ namespace KSP_Library
 
                 Bodies[24] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "UMBRIEL",
                     Radius = 584700,
                     GM = 78220217600,
 
+                    // orbital characteristics
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 266000000,
                     Eccentricity = .0039,
@@ -361,10 +466,12 @@ namespace KSP_Library
 
                 Bodies[25] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "TITANIA",
                     Radius = 788400,
                     GM = 235394801600,
 
+                    // orbital characteristics
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 435910000,
                     Eccentricity = .0011,
@@ -373,10 +480,12 @@ namespace KSP_Library
 
                 Bodies[26] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "OBERON",
                     Radius = 761400,
                     GM = 201156771200,
 
+                    // orbital characteristics
                     ParentBody = Bodies[21],
                     SemiMajorAxis = 583520000,
                     Eccentricity = .0014,
@@ -385,28 +494,40 @@ namespace KSP_Library
 
                 Bodies[27] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "NEPTUNE",
                     Radius = 24622000,
                     GM = 6836529000000000,
-                    NPRA = 299.3,
-                    NPDecl = 42.950,
 
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    299.36,
+                    43.46
+                    ),
+
+                    // orbital characteristics
                     ParentBody = Bodies[0],
                     SemiMajorAxis = 4504450000000,
                     Eccentricity = .009456,
                     Inclination = 1.767975,
                     ArgPer = 276.336,
-                    LongAsc = 131.784
+                    LongAsc = 131.784,
 
-                    //AxialTilt = 28.32,
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[27]).LongAsc,
+                    ((OrbitingBody)Bodies[27]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
                 };
 
                 Bodies[29] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "TRITON",
                     Radius = 1353400,
                     GM = 1428253100000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[27],
                     SemiMajorAxis = 354759000,
                     Eccentricity = .000016,
@@ -416,10 +537,12 @@ namespace KSP_Library
 
                 Bodies[29] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "NEREID",
                     Radius = 170000,
                     GM = 2060000000,
 
+                    // orbital characteristics
                     ParentBody = Bodies[27],
                     SemiMajorAxis = 354759000,
                     Eccentricity = .000016,
@@ -429,14 +552,61 @@ namespace KSP_Library
 
                 Bodies[28] = new OrbitingBody
                 {
+                    // physical characteristics
                     Name = "PROTEUS",
                     Radius = 210000,
                     GM = 2936595200,
 
+                    // orbital characteristics
                     ParentBody = Bodies[27],
                     SemiMajorAxis = 117647000,
                     Eccentricity = .00053,
                     Inclination = .524 // to Neptune's Equator
+                };
+
+                Bodies[30] = new OrbitingBody
+                {
+                    // physical characteristics
+                    Name = "PLUTO",
+                    Radius = 1187000,
+                    GM = 871000000000,
+
+                    EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    132.99,
+                    -6.16
+                    ),
+
+                    // orbital characteristics
+                    ParentBody = Bodies[0],
+                    SemiMajorAxis = 5915000000000,
+                    Eccentricity = .24905,
+                    Inclination = 17.1405,
+                    ArgPer = 113.834,
+                    LongAsc = 110.299,
+
+                    OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[27]).LongAsc,
+                    ((OrbitingBody)Bodies[27]).Inclination,
+                    ((Star)Bodies[0]).ReferencePlane
+                    ),
+                };
+
+                Bodies[31] = new OrbitingBody
+                {
+                    // physical characteristics
+                    Name = "CHARON",
+                    Radius = 606000,
+                    GM = 105850908800,
+
+                    // orbital characteristics
+                    ParentBody = Bodies[30],
+                    SemiMajorAxis = 19571000, // to Pluto's center of mass
+                    // 17536000 to system barycenter
+                    Eccentricity = .00,
+                    Inclination = 112.783, // to ecliptic
+                    // 119.591 to Pluto's Orbit
+                    LongAsc = 223.046
                 };
             }
         }

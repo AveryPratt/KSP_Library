@@ -20,8 +20,7 @@ namespace KSP_Library
                     Radius = 261600000,
                     GM = BigGM.ENotation(1.1723328, 18), //1172332800000000000
                     AtmosphereHeight = 600000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 432000
                 };
 
@@ -31,8 +30,7 @@ namespace KSP_Library
                     Name = "MOHO",
                     Radius = 250000,
                     GM = 168609380000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 1210000,
 
                     ParentBody = Bodies[0],
@@ -51,8 +49,7 @@ namespace KSP_Library
                     Radius = 700000,
                     GM = 8171730200000,
                     AtmosphereHeight = 90000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 80500,
 
                     ParentBody = Bodies[0],
@@ -70,8 +67,7 @@ namespace KSP_Library
                     Name = "GILLY",
                     Radius = 13000,
                     GM = 8289450, //49.8
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 28255,
 
                     ParentBody = Bodies[2],
@@ -90,8 +86,7 @@ namespace KSP_Library
                     Radius = 600000,
                     GM = 3531600000000,
                     AtmosphereHeight = 70000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 21549.425,
 
                     ParentBody = Bodies[0],
@@ -109,8 +104,7 @@ namespace KSP_Library
                     Name = "MUN",
                     Radius = 200000,
                     GM = 65138398000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 138984.38,
 
                     ParentBody = Bodies[4],
@@ -128,8 +122,7 @@ namespace KSP_Library
                     Name = "MINMUS",
                     Radius = 60000,
                     GM = 1765800000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 40400,
 
                     ParentBody = Bodies[4],
@@ -148,8 +141,7 @@ namespace KSP_Library
                     Radius = 320000,
                     GM = 301363210000,
                     AtmosphereHeight = 50000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 65517.859,
 
                     ParentBody = Bodies[0],
@@ -167,8 +159,7 @@ namespace KSP_Library
                     Name = "IKE",
                     Radius = 130000,
                     GM = 18568369000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 65517.862,
 
                     ParentBody = Bodies[7],
@@ -186,8 +177,7 @@ namespace KSP_Library
                     Name = "DRES",
                     Radius = 138000,
                     GM = 21484489000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 34800,
 
                     ParentBody = Bodies[0],
@@ -206,8 +196,7 @@ namespace KSP_Library
                     Radius = 6000000,
                     GM = 282528000000000,
                     AtmosphereHeight = 200000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 36000,
 
                     ParentBody = Bodies[0],
@@ -226,8 +215,7 @@ namespace KSP_Library
                     Radius = 500000,
                     GM = 1962000000000,
                     AtmosphereHeight = 50000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 52980.879,
 
                     ParentBody = Bodies[10],
@@ -245,8 +233,7 @@ namespace KSP_Library
                     Name = "VALL",
                     Radius = 300000,
                     GM = 207481500000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 105962.09,
 
                     ParentBody = Bodies[10],
@@ -264,8 +251,7 @@ namespace KSP_Library
                     Name = "TYLO",
                     Radius = 600000,
                     GM = 2825280000000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 211926.36,
 
                     ParentBody = Bodies[10],
@@ -283,8 +269,7 @@ namespace KSP_Library
                     Name = "BOP",
                     Radius = 65000,
                     GM = 2486834900,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 544507.43,
 
                     ParentBody = Bodies[10],
@@ -302,8 +287,7 @@ namespace KSP_Library
                     Name = "POL",
                     Radius = 44000,
                     GM = 721702080,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 901902.62,
 
                     ParentBody = Bodies[10],
@@ -322,8 +306,7 @@ namespace KSP_Library
                     Radius = 5300000,
                     GM = 82117744000000,
                     AtmosphereHeight = 580000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 285000,
 
                     ParentBody = Bodies[0],
@@ -341,8 +324,7 @@ namespace KSP_Library
                     Name = "HALE",
                     Radius = 6000,
                     GM = 812268,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 23551.292,
 
                     ParentBody = Bodies[16],
@@ -360,8 +342,7 @@ namespace KSP_Library
                     Name = "OVOK",
                     Radius = 26000,
                     GM = 13263120,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 29435.120,
 
                     ParentBody = Bodies[16],
@@ -379,8 +360,7 @@ namespace KSP_Library
                     Name = "EELOO",
                     Radius = 210000,
                     GM = 74410815000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 57904.894,
 
                     ParentBody = Bodies[16],
@@ -398,8 +378,7 @@ namespace KSP_Library
                     Name = "SLATE",
                     Radius = 540000,
                     GM = 2431506600000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 192738.24,
 
                     ParentBody = Bodies[16],
@@ -418,8 +397,7 @@ namespace KSP_Library
                     Radius = 280000,
                     GM = 192506730000,
                     AtmosphereHeight = 95000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 666040.73,
 
                     ParentBody = Bodies[16],
@@ -438,8 +416,7 @@ namespace KSP_Library
                     Radius = 2177000,
                     GM = 11948654000000,
                     AtmosphereHeight = 325000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 41000,
 
                     ParentBody = Bodies[0],
@@ -457,8 +434,7 @@ namespace KSP_Library
                     Name = "POLTA",
                     Radius = 220000,
                     GM = 90212760000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 73004.642,
 
                     ParentBody = Bodies[22],
@@ -476,8 +452,7 @@ namespace KSP_Library
                     Name = "PRIAX",
                     Radius = 74000,
                     GM = 338433230,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 73004.642,
 
                     ParentBody = Bodies[22],
@@ -495,8 +470,7 @@ namespace KSP_Library
                     Name = "WAL",
                     Radius = 370000,
                     GM = 496905930000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 1009238.4,
 
                     ParentBody = Bodies[22],
@@ -514,8 +488,7 @@ namespace KSP_Library
                     Name = "TAL",
                     Radius = 22000,
                     GM = 21366180,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 48866.138,
 
                     ParentBody = Bodies[25],
@@ -534,8 +507,7 @@ namespace KSP_Library
                     Radius = 2145000,
                     GM = 14172721000000,
                     AtmosphereHeight = 260000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 40250,
 
                     ParentBody = Bodies[0],
@@ -554,8 +526,7 @@ namespace KSP_Library
                     Radius = 286000,
                     GM = 186161150000,
                     AtmosphereHeight = 35000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 306390.35,
 
                     ParentBody = Bodies[27],
@@ -573,8 +544,7 @@ namespace KSP_Library
                     Name = "NISSEE",
                     Radius = 30000,
                     GM = 39730500,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 27924.872,
 
                     ParentBody = Bodies[27],
@@ -592,8 +562,7 @@ namespace KSP_Library
                     Name = "PLOCK",
                     Radius = 189000,
                     GM = 51862605000,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 106309.61,
 
                     ParentBody = Bodies[0],
@@ -611,8 +580,7 @@ namespace KSP_Library
                     Name = "KAREN",
                     Radius = 85050,
                     GM = 468340350,
-                    NPRA = 0,
-                    NPDecl = 0,
+                    EqPlane = new Plane(0, 0, 0, 0),
                     SidRotPeriod = 106309.61,
 
                     ParentBody = Bodies[30],
