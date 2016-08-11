@@ -22,12 +22,19 @@ namespace KSP_Library
                     GM = BigGM.ENotation(1.32712440018, 20),
                     SidRotPeriod = 2164320, // at equator
                     //GM = 132712440018000000000
-                    
-                    ReferencePlane = new Plane(270, 23.439291, 0, 0),
-                    EqPlane = new Plane(((Star)Bodies[0]).ReferencePlane, 286.13, 63.87),
                 };
+                ((Star)Bodies[0]).ReferencePlane = new Plane(
+                    new Coordinates() { RA = 270, Decl = 23.439291 },
+                    "Earth Ecliptic"
+                    );
+                Bodies[0].EqPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    286.13,
+                    63.87,
+                    "Sun Equator"
+                    );
 
-                Bodies[1] = new OrbitingBody
+                Bodies[1] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "MERCURY",
@@ -36,10 +43,11 @@ namespace KSP_Library
                     SidRotPeriod = 5067031.68,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    281.01,
-                    61.41
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        281.01,
+                        61.41,
+                        "Mercury Equator"
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -47,16 +55,16 @@ namespace KSP_Library
                     Eccentricity = 0.20563593,
                     Inclination = 7.00497902,
                     ArgPer = 29.12703035,
-                    LongAsc = 48.33076593,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[1]).LongAsc, 
-                    ((OrbitingBody)Bodies[1]).Inclination, 
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 48.33076593
                 };
+                ((FixedOrbitingBody)Bodies[1]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[1]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[1]).Inclination,
+                    "Mercury Orbit"
+                    );
 
-                Bodies[2] = new OrbitingBody
+                Bodies[2] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "VENUS",
@@ -65,10 +73,11 @@ namespace KSP_Library
                     SidRotPeriod = -20996755.2,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    272.76, //92.76 for counterclockwise pole
-                    67.16 //-67.16 for counterclockwise pole
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        272.76, //92.76 for counterclockwise pole
+                        67.16, //-67.16 for counterclockwise pole
+                        "Venus Equator"
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -77,15 +86,15 @@ namespace KSP_Library
                     Inclination = 3.39467605,
                     ArgPer = 54.92262463,
                     LongAsc = 76.67984255,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[2]).LongAsc,
-                    ((OrbitingBody)Bodies[2]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
                 };
+                ((FixedOrbitingBody)Bodies[2]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[2]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[2]).Inclination,
+                    "Venus Orbit"
+                    );
 
-                Bodies[3] = new OrbitingBody
+                Bodies[3] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "EARTH",
@@ -93,7 +102,7 @@ namespace KSP_Library
                     GM = 398600441800000,
                     SidRotPeriod = 0.99726968,
 
-                    EqPlane = new Plane(),
+                    EqPlane = new Plane("Celestial Sphere"),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -103,28 +112,33 @@ namespace KSP_Library
                     ArgPer = 102.93768193,
                     LongAsc = 0,
 
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[3]).LongAsc,
-                    ((OrbitingBody)Bodies[3]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    OrbitalPlane = ((Star)Bodies[0]).ReferencePlane
                 };
 
-                Bodies[4] = new OrbitingBody
+                Bodies[4] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "MOON",
-                    Radius = 1737000,
-                    GM = 4904869500000,
+                    Radius = 1737500,
+                    GM = 4902801000000,
+                    SidRotPeriod = 2360591.5104,
 
                     // orbital characteristics
                     ParentBody = Bodies[3],
-                    SemiMajorAxis = 384399000,
-                    Eccentricity = .0549,
-                    Inclination = 5.145
+                    SemiMajorAxis = 384400000,
+                    Eccentricity = 0.0554,
+                    Inclination = 5.16,
+                    ArgPer = 318.15,
+                    LongAsc = 125.08
                 };
+                ((FixedOrbitingBody)Bodies[4]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[4]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[4]).Inclination,
+                    "Moon Orbit"
+                    );
 
-                Bodies[5] = new OrbitingBody
+                Bodies[5] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "MARS",
@@ -133,10 +147,11 @@ namespace KSP_Library
                     SidRotPeriod = 88642.664064,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    317.68,
-                    52.89
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        317.68,
+                        52.89,
+                        "Mars Equator"
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -144,50 +159,79 @@ namespace KSP_Library
                     Eccentricity = 0.09339410,
                     Inclination = 1.84969142,
                     ArgPer = 286.4968315,
-                    LongAsc = 49.55953891,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[5]).LongAsc,
-                    ((OrbitingBody)Bodies[5]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 49.55953891
                 };
+                ((FixedOrbitingBody)Bodies[5]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[5]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[5]).Inclination,
+                    "Mars Orbit"
+                    );
 
                 Bodies[6] = new OrbitingBody
                 {
                     // physical characteristics
                     Name = "PHOBOS",
-                    Radius = 11266,
-                    GM = 711390,
-                    //NPRightAsc = 317.68143,
-                    //NPDeclination = 52.88650,
+                    Radius = 11100,
+                    GM = 711200,
                     SidRotPeriod = 27553.843872,
 
                     // orbital characteristics
                     ParentBody = Bodies[5],
                     SemiMajorAxis = 9376000,
-                    Eccentricity = .0151,
-                    Inclination = .046 // to local laplace plane
+                    Eccentricity = 0.0151,
+                    Inclination = 1.075, // to local laplace plane
+                    ArgPer = 150.057,
+                    LongAsc = 207.784,
+
+                    LaplacePlane = new Plane(
+                        ((Star)Bodies[0]).ReferencePlane,
+                        new Coordinates()
+                        {
+                            RA = 317.671,
+                            Decl = 52.893
+                        },
+                        "Phobos Laplace"
+                        )
                 };
+                ((OrbitingBody)Bodies[6]).OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[6]).LaplacePlane,
+                    ((OrbitingBody)Bodies[6]).LongAsc,
+                    ((OrbitingBody)Bodies[6]).Inclination,
+                    "Phobos Orbit"
+                    );
 
                 Bodies[7] = new OrbitingBody
                 {
                     // physical characteristics
                     Name = "DEIMOS",
                     Radius = 6200,
-                    GM = 98523,
-                    //NPRightAsc = 317.68143,
-                    //NPDeclination = 52.88650,
+                    GM = 98500,
                     SidRotPeriod = 109123.2,
 
                     // orbital characteristics
                     ParentBody = Bodies[5],
-                    SemiMajorAxis = 23463200,
-                    Eccentricity = .00033,
-                    Inclination = 1.791 // to local laplace plane
-                };
+                    SemiMajorAxis = 23458000,
+                    Eccentricity = 0.0002,
+                    Inclination = 1.788, // to local laplace plane
+                    ArgPer = 260.729,
+                    LongAsc = 24.525,
 
-                Bodies[8] = new OrbitingBody
+                    LaplacePlane = new Plane(
+                        ((Star)Bodies[0]).ReferencePlane,
+                        316.657,
+                        53.529,
+                        "Deimos Laplace"
+                        )
+                };
+                ((FixedOrbitingBody)Bodies[7]).OrbitalPlane = new Plane(
+                    ((OrbitingBody)Bodies[7]).LaplacePlane,
+                    ((FixedOrbitingBody)Bodies[7]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[7]).Inclination,
+                    "Deimos Orbit"
+                    );
+
+                Bodies[8] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "JUPITER",
@@ -196,10 +240,10 @@ namespace KSP_Library
                     SidRotPeriod = 35729.856,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    268.06,
-                    64.50
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        268.06,
+                        64.50
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -207,16 +251,16 @@ namespace KSP_Library
                     Eccentricity = 0.04838624,
                     Inclination = 1.30439695,
                     ArgPer = 274.25457074,
-                    LongAsc = 100.47390909,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[8]).LongAsc,
-                    ((OrbitingBody)Bodies[8]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 100.47390909
                 };
+                ((FixedOrbitingBody)Bodies[8]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[8]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[8]).Inclination,
+                    "Jupiter Orbit"
+                    );
 
-                Bodies[9] = new OrbitingBody
+                Bodies[9] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "IO",
@@ -229,7 +273,7 @@ namespace KSP_Library
                     Eccentricity = .0041,
                 };
 
-                Bodies[10] = new OrbitingBody
+                Bodies[10] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "EUROPA",
@@ -242,7 +286,7 @@ namespace KSP_Library
                     Eccentricity = .009,
                 };
 
-                Bodies[11] = new OrbitingBody
+                Bodies[11] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "GANYMEDE",
@@ -255,7 +299,7 @@ namespace KSP_Library
                     Eccentricity = .0013,
                 };
 
-                Bodies[12] = new OrbitingBody
+                Bodies[12] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "CALLISTO",
@@ -268,7 +312,7 @@ namespace KSP_Library
                     Eccentricity = .0074,
                 };
 
-                Bodies[13] = new OrbitingBody
+                Bodies[13] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "SATURN",
@@ -277,10 +321,10 @@ namespace KSP_Library
                     SidRotPeriod = 38362.464,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    40.60,
-                    83.54
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        40.60,
+                        83.54
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -288,16 +332,16 @@ namespace KSP_Library
                     Eccentricity = 0.05386179,
                     Inclination = 2.48599187,
                     ArgPer = 338.93645383,
-                    LongAsc = 113.66242448,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[13]).LongAsc,
-                    ((OrbitingBody)Bodies[13]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 113.66242448
                 };
+                ((FixedOrbitingBody)Bodies[13]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[13]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[13]).Inclination,
+                    "Saturn Orbit"
+                    );
 
-                Bodies[14] = new OrbitingBody
+                Bodies[14] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "MIMAS",
@@ -311,7 +355,7 @@ namespace KSP_Library
                     Inclination = 1.574 // to Saturn's Equator
                 };
 
-                Bodies[15] = new OrbitingBody
+                Bodies[15] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "ENCELADUS",
@@ -325,7 +369,7 @@ namespace KSP_Library
                     Inclination = 0.019 // to Saturn's Equator
                 };
 
-                Bodies[16] = new OrbitingBody
+                Bodies[16] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "TETHYS",
@@ -339,7 +383,7 @@ namespace KSP_Library
                     Inclination = 1.12 // to Saturn's Equator
                 };
 
-                Bodies[17] = new OrbitingBody
+                Bodies[17] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "DIONE",
@@ -353,7 +397,7 @@ namespace KSP_Library
                     Inclination = .019 // to Saturn's Equator
                 };
 
-                Bodies[18] = new OrbitingBody
+                Bodies[18] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "RHEA",
@@ -367,7 +411,7 @@ namespace KSP_Library
                     Inclination = .345 // to Saturn's Equator
                 };
 
-                Bodies[19] = new OrbitingBody
+                Bodies[19] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "TITAN",
@@ -381,7 +425,7 @@ namespace KSP_Library
                     Inclination = .34854 // to Saturn's Equator
                 };
 
-                Bodies[20] = new OrbitingBody
+                Bodies[20] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "IAPETUS",
@@ -396,7 +440,7 @@ namespace KSP_Library
                     // 15.47 to Saturn's equator
                 };
 
-                Bodies[21] = new OrbitingBody
+                Bodies[21] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "URANUS",
@@ -405,10 +449,10 @@ namespace KSP_Library
                     SidRotPeriod = -62063.712,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    257.31,
-                    -15.18
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        257.31,
+                        -15.18
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -416,16 +460,16 @@ namespace KSP_Library
                     Eccentricity = 0.04725744,
                     Inclination = 0.77263783,
                     ArgPer = 96.93735127,
-                    LongAsc = 74.01692503,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[21]).LongAsc,
-                    ((OrbitingBody)Bodies[21]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 74.01692503
                 };
+                ((FixedOrbitingBody)Bodies[21]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[21]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[21]).Inclination,
+                    "Uranus Orbit"
+                    );
 
-                Bodies[22] = new OrbitingBody
+                Bodies[22] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "MIRANDA",
@@ -439,7 +483,7 @@ namespace KSP_Library
                     Inclination = 4.232 // to Uranus's Equator
                 };
 
-                Bodies[23] = new OrbitingBody
+                Bodies[23] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "ARIEL",
@@ -453,7 +497,7 @@ namespace KSP_Library
                     Inclination = .260 // to Uranus's Equator
                 };
 
-                Bodies[24] = new OrbitingBody
+                Bodies[24] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "UMBRIEL",
@@ -467,7 +511,7 @@ namespace KSP_Library
                     Inclination = .128 // to Uranus's Equator
                 };
 
-                Bodies[25] = new OrbitingBody
+                Bodies[25] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "TITANIA",
@@ -481,7 +525,7 @@ namespace KSP_Library
                     Inclination = .340 // to Uranus's Equator
                 };
 
-                Bodies[26] = new OrbitingBody
+                Bodies[26] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "OBERON",
@@ -495,7 +539,7 @@ namespace KSP_Library
                     Inclination = .058 // to Uranus's Equator
                 };
 
-                Bodies[27] = new OrbitingBody
+                Bodies[27] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "NEPTUNE",
@@ -504,10 +548,10 @@ namespace KSP_Library
                     SidRotPeriod = 57996,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    299.36,
-                    43.46
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        299.36,
+                        43.46
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -515,16 +559,16 @@ namespace KSP_Library
                     Eccentricity = 0.00859048,
                     Inclination = 1.77004347,
                     ArgPer = 276.18053653,
-                    LongAsc = 131.78422574,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[27]).LongAsc,
-                    ((OrbitingBody)Bodies[27]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 131.78422574
                 };
+                ((FixedOrbitingBody)Bodies[27]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[27]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[27]).Inclination,
+                    "Neptune Orbit"
+                    );
 
-                Bodies[29] = new OrbitingBody
+                Bodies[29] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "TRITON",
@@ -539,7 +583,7 @@ namespace KSP_Library
                     // 156.885 to Neptune's Equator
                 };
 
-                Bodies[29] = new OrbitingBody
+                Bodies[29] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "NEREID",
@@ -554,7 +598,7 @@ namespace KSP_Library
                     // 156.885 to Neptune's Equator
                 };
 
-                Bodies[28] = new OrbitingBody
+                Bodies[28] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "PROTEUS",
@@ -568,7 +612,7 @@ namespace KSP_Library
                     Inclination = .524 // to Neptune's Equator
                 };
 
-                Bodies[30] = new OrbitingBody
+                Bodies[30] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "PLUTO",
@@ -577,10 +621,10 @@ namespace KSP_Library
                     SidRotPeriod = -6.3872,
 
                     EqPlane = new Plane(
-                    ((Star)Bodies[0]).ReferencePlane,
-                    132.99,
-                    -6.16
-                    ),
+                        ((Star)Bodies[0]).ReferencePlane,
+                        132.99,
+                        -6.16
+                        ),
 
                     // orbital characteristics
                     ParentBody = Bodies[0],
@@ -588,16 +632,16 @@ namespace KSP_Library
                     Eccentricity = 0.24882730,
                     Inclination = 17.14001206,
                     ArgPer = 113.76497945,
-                    LongAsc = 110.30393684,
-
-                    OrbitalPlane = new Plane(
-                    ((OrbitingBody)Bodies[27]).LongAsc,
-                    ((OrbitingBody)Bodies[27]).Inclination,
-                    ((Star)Bodies[0]).ReferencePlane
-                    ),
+                    LongAsc = 110.30393684
                 };
+                ((FixedOrbitingBody)Bodies[30]).OrbitalPlane = new Plane(
+                    ((Star)Bodies[0]).ReferencePlane,
+                    ((FixedOrbitingBody)Bodies[30]).LongAsc,
+                    ((FixedOrbitingBody)Bodies[30]).Inclination,
+                    "Pluto Orbit"
+                    );
 
-                Bodies[31] = new OrbitingBody
+                Bodies[31] = new FixedOrbitingBody
                 {
                     // physical characteristics
                     Name = "CHARON",

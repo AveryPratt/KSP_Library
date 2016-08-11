@@ -21,17 +21,17 @@ namespace KSP_Library
                     GM = BigGM.ENotation(1.1723328, 18),
                     //GM = 1172332800000000000
                     AtmosphereHeight = 600000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 432000
                 };
 
-                Bodies[1] = new OrbitingBody
+                Bodies[1] = new FixedOrbitingBody
                 {
                     ID = 2,
                     Name = "MOHO",
                     Radius = 250000,
                     GM = 168609380000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 1210000,
 
                     ParentBody = Bodies[0],
@@ -43,14 +43,14 @@ namespace KSP_Library
                     SOIRad = 9646663
                 };
 
-                Bodies[2] = new OrbitingBody
+                Bodies[2] = new FixedOrbitingBody
                 {
                     ID = 3,
                     Name = "EVE",
                     Radius = 700000,
                     GM = 8171730200000,
                     AtmosphereHeight = 90000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 80500,
 
                     ParentBody = Bodies[0],
@@ -62,13 +62,13 @@ namespace KSP_Library
                     SOIRad = 85109365
                 };
 
-                Bodies[3] = new OrbitingBody
+                Bodies[3] = new FixedOrbitingBody
                 {
                     ID = 4,
                     Name = "GILLY",
                     Radius = 13000,
                     GM = 8289450, //49.8
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 28255,
 
                     ParentBody = Bodies[2],
@@ -80,14 +80,14 @@ namespace KSP_Library
                     SOIRad = 126123 //.27
                 };
 
-                Bodies[4] = new OrbitingBody
+                Bodies[4] = new FixedOrbitingBody
                 {
                     ID = 5,
                     Name = "KERBIN",
                     Radius = 600000,
                     GM = 3531600000000,
                     AtmosphereHeight = 70000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 21549.425,
 
                     ParentBody = Bodies[0],
@@ -99,13 +99,13 @@ namespace KSP_Library
                     SOIRad = 84159286
                 };
 
-                Bodies[5] = new OrbitingBody
+                Bodies[5] = new FixedOrbitingBody
                 {
                     ID = 6,
                     Name = "MUN",
                     Radius = 200000,
                     GM = 65138398000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 138984.38,
 
                     ParentBody = Bodies[4],
@@ -117,13 +117,13 @@ namespace KSP_Library
                     SOIRad = 2429559 //.1
                 };
 
-                Bodies[6] = new OrbitingBody
+                Bodies[6] = new FixedOrbitingBody
                 {
                     ID = 7,
                     Name = "MINMUS",
                     Radius = 60000,
                     GM = 1765800000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 40400,
 
                     ParentBody = Bodies[4],
@@ -135,14 +135,14 @@ namespace KSP_Library
                     SOIRad = 2247428 //.4
                 };
 
-                Bodies[7] = new OrbitingBody
+                Bodies[7] = new FixedOrbitingBody
                 {
                     ID = 8,
                     Name = "DUNA",
                     Radius = 320000,
                     GM = 301363210000,
                     AtmosphereHeight = 50000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 65517.859,
 
                     ParentBody = Bodies[0],
@@ -154,13 +154,13 @@ namespace KSP_Library
                     SOIRad = 47921949
                 };
 
-                Bodies[8] = new OrbitingBody
+                Bodies[8] = new FixedOrbitingBody
                 {
                     ID = 9,
                     Name = "IKE",
                     Radius = 130000,
                     GM = 18568369000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 65517.862,
 
                     ParentBody = Bodies[7],
@@ -172,13 +172,13 @@ namespace KSP_Library
                     SOIRad = 1049599 //8.9
                 };
 
-                Bodies[9] = new OrbitingBody
+                Bodies[9] = new FixedOrbitingBody
                 {
                     ID = 10,
                     Name = "DRES",
                     Radius = 138000,
                     GM = 21484489000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 34800,
 
                     ParentBody = Bodies[0],
@@ -190,14 +190,14 @@ namespace KSP_Library
                     SOIRad = 32832840
                 };
 
-                Bodies[10] = new OrbitingBody
+                Bodies[10] = new FixedOrbitingBody
                 {
                     ID = 11,
                     Name = "JOOL",
                     Radius = 6000000,
                     GM = 282528000000000,
                     AtmosphereHeight = 200000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 36000,
 
                     ParentBody = Bodies[0],
@@ -209,14 +209,14 @@ namespace KSP_Library
                     SOIRad = 2455985200
                 };
 
-                Bodies[11] = new OrbitingBody
+                Bodies[11] = new FixedOrbitingBody
                 {
                     ID = 12,
                     Name = "LAYTHE",
                     Radius = 500000,
                     GM = 1962000000000,
                     AtmosphereHeight = 50000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 52980.879,
 
                     ParentBody = Bodies[10],
@@ -228,13 +228,13 @@ namespace KSP_Library
                     SOIRad = 3723646 //5.8
                 };
 
-                Bodies[12] = new OrbitingBody
+                Bodies[12] = new FixedOrbitingBody
                 {
                     ID = 13,
                     Name = "VALL",
                     Radius = 300000,
                     GM = 207481500000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 105962.09,
 
                     ParentBody = Bodies[10],
@@ -246,13 +246,13 @@ namespace KSP_Library
                     SOIRad = 2406401 //.4
                 };
 
-                Bodies[13] = new OrbitingBody
+                Bodies[13] = new FixedOrbitingBody
                 {
                     ID = 14,
                     Name = "TYLO",
                     Radius = 600000,
                     GM = 2825280000000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 211926.36,
 
                     ParentBody = Bodies[10],
@@ -264,13 +264,13 @@ namespace KSP_Library
                     SOIRad = 10856518
                 };
 
-                Bodies[14] = new OrbitingBody
+                Bodies[14] = new FixedOrbitingBody
                 {
                     ID = 15,
                     Name = "BOP",
                     Radius = 65000,
                     GM = 2486834900,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 544507.43,
 
                     ParentBody = Bodies[10],
@@ -282,13 +282,13 @@ namespace KSP_Library
                     SOIRad = 1221061 //0.9
                 };
 
-                Bodies[15] = new OrbitingBody
+                Bodies[15] = new FixedOrbitingBody
                 {
                     ID = 16,
                     Name = "POL",
                     Radius = 44000,
                     GM = 721702080,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 901902.62,
 
                     ParentBody = Bodies[10],
@@ -300,13 +300,13 @@ namespace KSP_Library
                     SOIRad = 1042139 // 8.9
                 };
 
-                Bodies[16] = new OrbitingBody
+                Bodies[16] = new FixedOrbitingBody
                 {
                     ID = 17,
                     Name = "EELOO",
                     Radius = 210000,
                     GM = 74410815000,
-                    EqPlane = new Plane(0, 0, 0, 0),
+                    EqPlane = new Plane(),
                     SidRotPeriod = 19460,
 
                     ParentBody = Bodies[0],
