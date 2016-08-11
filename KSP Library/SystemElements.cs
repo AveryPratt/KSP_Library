@@ -50,87 +50,213 @@ namespace KSP_Library
             return bodyNames.ToString();
         }
     }
+    public struct Coordinates
+    {
+        public double RA;
+        public double Decl;
+
+        public override int GetHashCode()
+        {
+            int newHash = RA.GetHashCode();
+            newHash ^= Decl.GetHashCode();
+            return newHash;
+        }
+        public override bool Equals(object obj)
+        {
+            if (((Coordinates)obj).RA == RA && ((Coordinates)obj).Decl == Decl)
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
     public class Plane
     {
-        public double NPRA { get; set; }
-        public double NPDecl { get; set; }
-        public double FixedRA { get; set; }
-        public double FixedDecl { get; set; }
+        public string Name { get; set; }
+        public Coordinates NP { get; set; }
+        public Coordinates Origin { get; set; }
 
         public Plane RefPlane { get; set; }
-        public double Inclination { get; set; }
-        public double LongAsc { get; set; }
+        public double Incl { get; set; }
+        public double LAN { get; set; }
 
         // constructors
-        public Plane()
+        public Plane(string name = "Default Plane")
         {
-            NPRA = 0;
-            NPDecl = 90;
-            FixedRA = 0;
-            FixedDecl = 0;
+            Name = name;
+            NP = new Coordinates()
+            {
+                RA = 0,
+                Decl = 90
+            };
+            Origin = new Coordinates()
+            {
+                RA = 0,
+                Decl = 0
+            };
         }
-        public Plane(double npRA, double npDecl, double fixedRA, double fixedDecl)
+        public Plane(Coordinates np, string name = "")
         {
-            NPRA = npRA;
-            NPDecl = npDecl;
-            FixedRA = fixedRA;
-            FixedDecl = fixedDecl;
+            Name = name;
+            NP = np;
+
+            RefPlane = new Plane();
+            LAN = np.RA + 90;
+            Incl = 90 - np.Decl;
+
+            Origin = new Coordinates()
+            {
+                RA = LAN,
+                Decl = 0
+            };
         }
-        public Plane(Plane refPlane, double npRA, double npDecl)
+        public Plane(Plane refPlane, Coordinates np, string name = "")
         {
-            NPRA = npRA;
-            NPDecl = npDecl;
+            Name = name;
+            NP = np;
             RefPlane = refPlane;
-            setElements();
+            
+            Coordinates relNP = translateFixedToRel(np, refPlane);
+            LAN = relNP.RA + 90;
+            Incl = 90 - relNP.Decl;
+            Coordinates relOrigin = new Coordinates()
+            {
+                RA = LAN,
+                Decl = 0
+            };
+            Origin = translateRelToFixed(relOrigin, refPlane);
         }
-        public Plane(double longAsc, double incl, Plane refPlane)
+        public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
-            Inclination = incl;
-            LongAsc = longAsc;
+            Name = name;
+            LAN = lan;
+            Incl = incl;
             RefPlane = refPlane;
-            setCoordinates();
+            Coordinates relNP = new Coordinates()
+            {
+                RA = lan - 90,
+                Decl = 90 - incl
+            };
+            NP = translateRelToFixed(relNP, refPlane);
+            Coordinates relOrigin = new Coordinates()
+            {
+                RA = lan,
+                Decl = 0
+            };
+            Origin = translateRelToFixed(relOrigin, refPlane);
+        }
+        private Plane resetPlane(Plane plane)
+        {
+            Plane newPlane = new Plane(plane.NP, plane.Name);
+            return newPlane;
         }
 
-        private void setElements()
+        private Coordinates translateFixedToRel(Coordinates fix, Plane transPlane)
         {
-            double radNPRA = convertDegToRad(NPRA);
-            double radNPDecl = convertDegToRad(NPDecl);
-            double radRefNPRA = convertDegToRad(RefPlane.NPRA);
-            double radRefNPDecl = convertDegToRad(RefPlane.NPDecl);
-            double radFixRA = convertDegToRad(FixedRA);
-            double radFixDecl = convertDegToRad(FixedDecl);
-            Inclination = convertRadToDeg(Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl)));
-            //LongAsc = Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl));
-            LongAsc = convertRadToDeg(Math.Cos(Math.Sqrt(Math.Pow(radFixRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radFixRA * radRefNPRA * Math.Cos(radRefNPDecl - radFixDecl))));
+            double obl = 90 - transPlane.NP.Decl;
+            return new Coordinates()
+            {
+                RA = translateRA(fix.RA + 180, fix.Decl, obl) - 180,
+                Decl = translateDecl(fix.RA + 180, fix.Decl, obl) - 180
+            };
         }
-        private double convertDegToRad(double deg)
+        private Coordinates translateRelToFixed(Coordinates rel, Plane transPlane)
         {
-            return (deg / 360) * Math.PI;
-        }
-        private double convertRadToDeg(double rad)
-        {
-            return (rad / Math.PI) * 360;
+            double obl = 90 - transPlane.NP.Decl;
+            return new Coordinates()
+            {
+                RA = translateRA(rel.RA, rel.Decl, obl),
+                Decl = translateDecl(rel.RA, rel.Decl, obl)
+            };
         }
 
-        private void setCoordinates()
+        private double findIncl(Coordinates np, Coordinates refNP)
         {
-            double relativeNPRA = 90 - LongAsc;
-            double relativeNPDecl = 90 - Inclination;
-            double relativeFixedRA = LongAsc;
-            double relativeFixedDecl = 0;
-            double obl = Inclination;
-            NPRA = convertRadToDeg(translateRA(relativeNPRA, relativeNPDecl, obl));
-            NPDecl = convertRadToDeg(translateDecl(relativeNPRA, relativeNPDecl, obl));
-            FixedRA = convertRadToDeg(translateRA(relativeFixedRA, relativeFixedDecl, obl));
-            FixedDecl = convertRadToDeg(translateDecl(relativeFixedRA, relativeFixedDecl, obl));
+            double radNPRA = convertDegToRad(np.RA);
+            double radNPDecl = convertDegToRad(np.Decl);
+            double radRefNPRA = convertDegToRad(refNP.RA);
+            double radRefNPDecl = convertDegToRad(refNP.Decl);
+
+            double value = Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl));
+            return convertRadToDeg(value);
         }
+        private double findLAN(double refNPRA, double refNPDecl, double originRA, double originDecl)
+        {
+            double radRefNPRA = convertDegToRad(refNPRA);
+            double radRefNPDecl = convertDegToRad(refNPDecl);
+            double radOriginRA = convertDegToRad(originRA);
+            double radOriginDecl = convertDegToRad(originDecl);
+
+            double value = Math.Cos(Math.Sqrt(Math.Pow(radOriginRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radOriginRA * radRefNPRA * Math.Cos(radRefNPDecl - radOriginDecl)));
+            return convertRadToDeg(value);
+        }
+
         private double translateRA(double ra, double decl, double obl)
         {
-            return Math.Atan(Math.Sin(ra) * Math.Cos(obl) - Math.Tan(decl) * Math.Sin(obl) / Math.Cos(ra));
+            double radRA = convertDegToRad(ra);
+            double radDecl = convertDegToRad(decl);
+            double radObl = convertDegToRad(obl);
+
+            double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+            double denom = Math.Cos(radRA);
+            double value = Math.Atan(num / denom);
+            if (denom < 0)
+            {
+                return convertRadToDeg(value + Math.PI);
+            }
+            else return convertRadToDeg(value);
         }
         private double translateDecl(double ra, double decl, double obl)
         {
-            return Math.Asin(Math.Sin(decl) * Math.Cos(obl) + Math.Cos(decl) * Math.Sin(obl) * Math.Sin(ra));
+            double radRA = convertDegToRad(ra);
+            double radDecl = convertDegToRad(decl);
+            double radObl = convertDegToRad(obl);
+
+            double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
+            return convertRadToDeg(value);
+        }
+
+        private double convertDegToRad(double deg)
+        {
+            double rad = (deg / 180) * Math.PI;
+            while (rad < 0)
+            {
+                rad += 2 * Math.PI;
+            }
+            while (rad >= 2 * Math.PI)
+            {
+                rad -= 2 * Math.PI;
+            }
+            return rad;
+        }
+        private double convertRadToDeg(double rad)
+        {
+            double deg = (rad / Math.PI) * 180;
+            while (deg < 0)
+            {
+                deg += 360;
+            }
+            while (deg >= 360)
+            {
+                deg -= 360;
+            }
+            return Math.Round(deg, 4);
+        }
+
+        // overrides
+        public override bool Equals(object obj)
+        {
+            if (obj is Plane && ((Plane)obj).GetHashCode() == GetHashCode())
+            {
+                return true;
+            }
+            else return false;
+        }
+        public override int GetHashCode()
+        {
+            int newHash = NP.GetHashCode();
+            newHash ^= Origin.GetHashCode();
+            return newHash;
         }
     }
     public interface IOrbital
@@ -142,6 +268,12 @@ namespace KSP_Library
         double Inclination { get; set; }
         double ArgPer { get; set; }
         double LongAsc { get; set; }
+    }
+    public interface ILaplace
+    {
+        Plane LaplacePlane { get; set; }
+        int apPrecPer { get; set; }
+        int nodPrecPer { get; set; }
     }
     public abstract class Body
     {
@@ -176,7 +308,7 @@ namespace KSP_Library
             return Name;
         }
     }
-    public class OrbitingObject : IOrbital
+    public class FixedOrbitingObject : IOrbital
     {
         public Plane OrbitalPlane { get; set; }
         public int ID { get; set; }
@@ -188,7 +320,13 @@ namespace KSP_Library
         public double ArgPer { get; set; }
         public double LongAsc { get; set; }
     }
-    public class OrbitingBody : Body, IOrbital
+    public class OrbitingObject : FixedOrbitingObject, ILaplace
+    {
+        public Plane LaplacePlane { get; set; }
+        public int apPrecPer { get; set; }
+        public int nodPrecPer { get; set; }
+    }
+    public class FixedOrbitingBody : Body, IOrbital
     {
         public Plane OrbitalPlane { get; set; }
         public Body ParentBody { get; set; }
@@ -203,6 +341,12 @@ namespace KSP_Library
         {
 
         }
+    }
+    public class OrbitingBody : FixedOrbitingBody, ILaplace
+    {
+        public Plane LaplacePlane { get; set; }
+        public int apPrecPer { get; set; }
+        public int nodPrecPer { get; set; }
     }
     public class Star : Body
     {

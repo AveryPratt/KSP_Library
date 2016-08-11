@@ -22,7 +22,7 @@ namespace KSP_Library
                     //GM = 132712440018000000000
                 };
 
-                Bodies[1] = new OrbitingBody
+                Bodies[1] = new FixedOrbitingBody
                 {
                     Name = "MERCURY",
                     Radius = 2440000,
@@ -38,7 +38,7 @@ namespace KSP_Library
                     //AxialTilt = .034,
                 };
 
-                Bodies[2] = new OrbitingBody
+                Bodies[2] = new FixedOrbitingBody
                 {
                     Name = "VENUS",
                     Radius = 6052000,
@@ -54,7 +54,7 @@ namespace KSP_Library
                     //AxialTilt = 177.36,
                 };
 
-                Bodies[3] = new OrbitingBody
+                Bodies[3] = new FixedOrbitingBody
                 {
                     Name = "EARTH",
                     Radius = 6374327,
@@ -70,7 +70,7 @@ namespace KSP_Library
                     //AxialTilt = 23.4392811,
                 };
 
-                Bodies[4] = new OrbitingBody
+                Bodies[4] = new FixedOrbitingBody
                 {
                     Name = "MOON",
                     Radius = 1737000,
@@ -82,7 +82,7 @@ namespace KSP_Library
                     Inclination = 5.145
                 };
 
-                Bodies[5] = new OrbitingBody
+                Bodies[5] = new FixedOrbitingBody
                 {
                     Name = "MARS",
                     Radius = 3390000,
@@ -98,7 +98,7 @@ namespace KSP_Library
                     //AxialTilt = 25.19,
                 };
 
-                Bodies[6] = new OrbitingBody
+                Bodies[6] = new FixedOrbitingBody
                 {
                     Name = "PHOBOS",
                     Radius = 11266,
@@ -110,7 +110,7 @@ namespace KSP_Library
                     Inclination = 26.04
                 };
 
-                Bodies[7] = new OrbitingBody
+                Bodies[7] = new FixedOrbitingBody
                 {
                     Name = "DEIMOS",
                     Radius = 6200,
@@ -122,7 +122,7 @@ namespace KSP_Library
                     Inclination = 27.58
                 };
 
-                Bodies[8] = new OrbitingBody
+                Bodies[8] = new FixedOrbitingBody
                 {
                     Name = "VESTA",
                     Radius = 262700,
@@ -136,7 +136,7 @@ namespace KSP_Library
                     LongAsc = 103.85136
                 };
 
-                Bodies[9] = new OrbitingBody
+                Bodies[9] = new FixedOrbitingBody
                 {
                     Name = "CERES",
                     Radius = 473000,
@@ -150,7 +150,7 @@ namespace KSP_Library
                     LongAsc = 80.3293
                 };
 
-                Bodies[10] = new OrbitingBody
+                Bodies[10] = new FixedOrbitingBody
                 {
                     Name = "PALLAS",
                     Radius = 512000,
@@ -164,7 +164,7 @@ namespace KSP_Library
                     LongAsc = 173.096248
                 };
 
-                Bodies[11] = new OrbitingBody
+                Bodies[11] = new FixedOrbitingBody
                 {
                     Name = "INTERAMNIA",
                     Radius = 158310,
@@ -178,7 +178,7 @@ namespace KSP_Library
                     LongAsc = 280.30
                 };
 
-                Bodies[12] = new OrbitingBody
+                Bodies[12] = new FixedOrbitingBody
                 {
                     Name = "HYGIEA",
                     Radius = 431000,
@@ -192,7 +192,7 @@ namespace KSP_Library
                     LongAsc = 283.41
                 };
 
-                Bodies[8] = new OrbitingBody
+                Bodies[8] = new FixedOrbitingBody
                 {
                     Name = "JUPITER",
                     Radius = 69911000,
@@ -208,7 +208,7 @@ namespace KSP_Library
                     //AxialTilt = 3.13,
                 };
 
-                Bodies[9] = new OrbitingBody
+                Bodies[9] = new FixedOrbitingBody
                 {
                     Name = "IO",
                     Radius = 1821600,
@@ -220,7 +220,7 @@ namespace KSP_Library
                     Inclination = 2.213
                 };
 
-                Bodies[10] = new OrbitingBody
+                Bodies[10] = new FixedOrbitingBody
                 {
                     Name = "EUROPA",
                     Radius = 1560800,
@@ -232,7 +232,7 @@ namespace KSP_Library
                     Inclination = 1.791
                 };
 
-                Bodies[11] = new OrbitingBody
+                Bodies[11] = new FixedOrbitingBody
                 {
                     Name = "GANYMEDE",
                     Radius = 2634100,
@@ -244,7 +244,7 @@ namespace KSP_Library
                     Inclination = 2.214
                 };
 
-                Bodies[12] = new OrbitingBody
+                Bodies[12] = new FixedOrbitingBody
                 {
                     Name = "CALLISTO",
                     Radius = 2410300,
@@ -256,7 +256,7 @@ namespace KSP_Library
                     Inclination = 2.017
                 };
 
-                Bodies[13] = new OrbitingBody
+                Bodies[13] = new FixedOrbitingBody
                 {
                     Name = "SATURN",
                     Radius = 58232000,
@@ -272,7 +272,7 @@ namespace KSP_Library
                     //AxialTilt = 26.73,
                 };
 
-                Bodies[14] = new OrbitingBody
+                Bodies[14] = new FixedOrbitingBody
                 {
                     Name = "MIMAS",
                     Radius = 198200,
@@ -284,7 +284,7 @@ namespace KSP_Library
                     Inclination = 1.574 // to Saturn's Equator
                 };
 
-                Bodies[15] = new OrbitingBody
+                Bodies[15] = new FixedOrbitingBody
                 {
                     Name = "ENCELADUS",
                     Radius = 252100,
@@ -296,7 +296,7 @@ namespace KSP_Library
                     Inclination = 0.019 // to Saturn's Equator
                 };
 
-                Bodies[16] = new OrbitingBody
+                Bodies[16] = new FixedOrbitingBody
                 {
                     Name = "TETHYS",
                     Radius = 531100,
@@ -308,7 +308,7 @@ namespace KSP_Library
                     Inclination = 1.12 // to Saturn's Equator
                 };
 
-                Bodies[17] = new OrbitingBody
+                Bodies[17] = new FixedOrbitingBody
                 {
                     Name = "DIONE",
                     Radius = 561400,
@@ -320,7 +320,7 @@ namespace KSP_Library
                     Inclination = .019 // to Saturn's Equator
                 };
 
-                Bodies[18] = new OrbitingBody
+                Bodies[18] = new FixedOrbitingBody
                 {
                     Name = "RHEA",
                     Radius = 763800,
@@ -332,7 +332,7 @@ namespace KSP_Library
                     Inclination = .345 // to Saturn's Equator
                 };
 
-                Bodies[19] = new OrbitingBody
+                Bodies[19] = new FixedOrbitingBody
                 {
                     Name = "TITAN",
                     Radius = 2575500,
@@ -344,7 +344,7 @@ namespace KSP_Library
                     Inclination = .34854 // to Saturn's Equator
                 };
 
-                Bodies[20] = new OrbitingBody
+                Bodies[20] = new FixedOrbitingBody
                 {
                     Name = "IAPETUS",
                     Radius = 734500,
@@ -357,7 +357,7 @@ namespace KSP_Library
                     // 15.47 to Saturn's equator
                 };
 
-                Bodies[21] = new OrbitingBody
+                Bodies[21] = new FixedOrbitingBody
                 {
                     Name = "URANUS",
                     Radius = 25362000,
@@ -373,7 +373,7 @@ namespace KSP_Library
                     //AxialTilt = 97.77,
                 };
 
-                Bodies[22] = new OrbitingBody
+                Bodies[22] = new FixedOrbitingBody
                 {
                     Name = "MIRANDA",
                     Radius = 235800,
@@ -385,7 +385,7 @@ namespace KSP_Library
                     Inclination = 4.232 // to Uranus's Equator
                 };
 
-                Bodies[23] = new OrbitingBody
+                Bodies[23] = new FixedOrbitingBody
                 {
                     Name = "ARIEL",
                     Radius = 578900,
@@ -397,7 +397,7 @@ namespace KSP_Library
                     Inclination = .260 // to Uranus's Equator
                 };
 
-                Bodies[24] = new OrbitingBody
+                Bodies[24] = new FixedOrbitingBody
                 {
                     Name = "UMBRIEL",
                     Radius = 584700,
@@ -409,7 +409,7 @@ namespace KSP_Library
                     Inclination = .128 // to Uranus's Equator
                 };
 
-                Bodies[25] = new OrbitingBody
+                Bodies[25] = new FixedOrbitingBody
                 {
                     Name = "TITANIA",
                     Radius = 788400,
@@ -421,7 +421,7 @@ namespace KSP_Library
                     Inclination = .340 // to Uranus's Equator
                 };
 
-                Bodies[26] = new OrbitingBody
+                Bodies[26] = new FixedOrbitingBody
                 {
                     Name = "OBERON",
                     Radius = 761400,
@@ -433,7 +433,7 @@ namespace KSP_Library
                     Inclination = .058 // to Uranus's Equator
                 };
 
-                Bodies[27] = new OrbitingBody
+                Bodies[27] = new FixedOrbitingBody
                 {
                     Name = "NEPTUNE",
                     Radius = 24622000,
@@ -449,7 +449,7 @@ namespace KSP_Library
                     //AxialTilt = 28.32,
                 };
 
-                Bodies[28] = new OrbitingBody
+                Bodies[28] = new FixedOrbitingBody
                 {
                     Name = "PROTEUS",
                     Radius = 210000,
@@ -461,7 +461,7 @@ namespace KSP_Library
                     Inclination = .524 // to Neptune's Equator
                 };
 
-                Bodies[29] = new OrbitingBody
+                Bodies[29] = new FixedOrbitingBody
                 {
                     Name = "TRITON",
                     Radius = 1353400,
@@ -474,7 +474,7 @@ namespace KSP_Library
                     // 156.885 to Neptune's Equator
                 };
 
-                Bodies[30] = new OrbitingBody
+                Bodies[30] = new FixedOrbitingBody
                 {
                     Name = "PLUTO",
                     Radius = 1187000,
@@ -490,7 +490,7 @@ namespace KSP_Library
                     //AxialTilt = 119.591,
                 };
 
-                Bodies[31] = new OrbitingBody
+                Bodies[31] = new FixedOrbitingBody
                 {
                     Name = "CHARON",
                     Radius = 606000,
@@ -505,7 +505,7 @@ namespace KSP_Library
                     LongAsc = 223.046
                 };
 
-                Bodies[38] = new OrbitingBody
+                Bodies[38] = new FixedOrbitingBody
                 {
                     Name = "HAUMEA",
                     Radius = 620000,
@@ -519,7 +519,7 @@ namespace KSP_Library
                     LongAsc = 121.79
                 };
 
-                Bodies[39] = new OrbitingBody
+                Bodies[39] = new FixedOrbitingBody
                 {
                     Name = "MAKEMAKE",
                     Radius = 715000,
@@ -533,7 +533,7 @@ namespace KSP_Library
                     LongAsc = 79.3659
                 };
 
-                Bodies[40] = new OrbitingBody
+                Bodies[40] = new FixedOrbitingBody
                 {
                     Name = "ERIS",
                     Radius = 1163000,
