@@ -50,10 +50,51 @@ namespace KSP_Library
             return bodyNames.ToString();
         }
     }
-    public struct Coordinates
+    public struct VecCart
+    {
+        public double X;
+        public double Y;
+        public double Z;
+
+        private VecSphere ToVecSphere()
+        {
+            return new VecSphere()
+            {
+                RA = Math.Atan2(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), Z),
+                Decl = Math.Atan2(Y, X)
+            };
+        }
+
+        public override int GetHashCode()
+        {
+            int newHash = X.GetHashCode();
+            newHash ^= Y.GetHashCode();
+            newHash ^= Z.GetHashCode();
+            return newHash;
+        }
+        public override bool Equals(object obj)
+        {
+            if (((VecCart)obj).X == X && ((VecCart)obj).Y == Y && ((VecCart)obj).Z == Z)
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+    public struct VecSphere
     {
         public double RA;
         public double Decl;
+
+        private VecCart ToVecCart()
+        {
+            return new VecCart()
+            {
+                X = Math.Sin(RA) * Math.Cos(Decl),
+                Y = Math.Sin(RA) * Math.Cos(Decl),
+                Z = Math.Cos(RA)
+            };
+        }
 
         public override int GetHashCode()
         {
@@ -63,7 +104,7 @@ namespace KSP_Library
         }
         public override bool Equals(object obj)
         {
-            if (((Coordinates)obj).RA == RA && ((Coordinates)obj).Decl == Decl)
+            if (((VecSphere)obj).RA == RA && ((VecSphere)obj).Decl == Decl)
             {
                 return true;
             }
@@ -73,8 +114,8 @@ namespace KSP_Library
     public class Plane
     {
         public string Name { get; set; }
-        public Coordinates NP { get; set; }
-        public Coordinates Origin { get; set; }
+        public VecSphere NP { get; set; }
+        public VecSphere Origin { get; set; }
 
         public Plane RefPlane { get; set; }
         public double Incl { get; set; }
@@ -84,47 +125,47 @@ namespace KSP_Library
         public Plane(string name = "Default Plane")
         {
             Name = name;
-            NP = new Coordinates()
+            NP = new VecSphere()
             {
                 RA = 0,
                 Decl = 90
             };
-            Origin = new Coordinates()
+            Origin = new VecSphere()
             {
                 RA = 0,
                 Decl = 0
             };
         }
-        public Plane(Coordinates np, string name = "")
+        public Plane(VecSphere np, string name = "")
         {
             Name = name;
             NP = np;
-
-            RefPlane = new Plane();
+            
             LAN = np.RA + 90;
             Incl = 90 - np.Decl;
+            RefPlane = new Plane();
 
-            Origin = new Coordinates()
+            Origin = new VecSphere()
             {
                 RA = LAN,
                 Decl = 0
             };
         }
-        public Plane(Plane refPlane, Coordinates np, string name = "")
+        public Plane(Plane refPlane, VecSphere np, string name = "")
         {
             Name = name;
             NP = np;
             RefPlane = refPlane;
             
-            Coordinates relNP = translateFixedToRel(np, refPlane);
+            VecSphere relNP = translateFixToRel(np, refPlane);
             LAN = relNP.RA + 90;
-            Incl = 90 - relNP.Decl;
-            Coordinates relOrigin = new Coordinates()
+            Incl = findCAngle(np, refPlane.NP);
+            VecSphere relOrigin = new VecSphere()
             {
                 RA = LAN,
                 Decl = 0
             };
-            Origin = translateRelToFixed(relOrigin, refPlane);
+            Origin = translateRelToFix(relOrigin, refPlane);
         }
         public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
@@ -132,18 +173,18 @@ namespace KSP_Library
             LAN = lan;
             Incl = incl;
             RefPlane = refPlane;
-            Coordinates relNP = new Coordinates()
+            VecSphere relNP = new VecSphere()
             {
                 RA = lan - 90,
                 Decl = 90 - incl
             };
-            NP = translateRelToFixed(relNP, refPlane);
-            Coordinates relOrigin = new Coordinates()
+            NP = translateRelToFix(relNP, refPlane);
+            VecSphere relOrigin = new VecSphere()
             {
                 RA = lan,
                 Decl = 0
             };
-            Origin = translateRelToFixed(relOrigin, refPlane);
+            Origin = translateRelToFix(relOrigin, refPlane);
         }
         private Plane resetPlane(Plane plane)
         {
@@ -151,50 +192,50 @@ namespace KSP_Library
             return newPlane;
         }
 
-        private Coordinates translateFixedToRel(Coordinates fix, Plane transPlane)
+        private VecSphere translateFixToRel(VecSphere fix, Plane relPlane)
         {
-            double obl = 90 - transPlane.NP.Decl;
-            return new Coordinates()
+            double obl = 90 - relPlane.NP.Decl;
+            return new VecSphere()
             {
-                RA = translateRA(fix.RA + 180, fix.Decl, obl) - 180,
-                Decl = translateDecl(fix.RA + 180, fix.Decl, obl) - 180
+                RA = translateRA(fix, obl),
+                Decl = translateDecl(fix, obl)
             };
         }
-        private Coordinates translateRelToFixed(Coordinates rel, Plane transPlane)
+        private VecSphere translateRelToFix(VecSphere rel, Plane relPlane)
         {
-            double obl = 90 - transPlane.NP.Decl;
-            return new Coordinates()
+            double obl = 90 - relPlane.NP.Decl;
+            return new VecSphere()
             {
-                RA = translateRA(rel.RA, rel.Decl, obl),
-                Decl = translateDecl(rel.RA, rel.Decl, obl)
+                RA = translateRA(rel, obl),
+                Decl = translateDecl(rel, obl)
             };
         }
 
-        private double findIncl(Coordinates np, Coordinates refNP)
+        private double findCAngle(VecSphere np, VecSphere refNP)
         {
-            double radNPRA = convertDegToRad(np.RA);
-            double radNPDecl = convertDegToRad(np.Decl);
+            double radNPDecl = convertDegToRad(90 - np.Decl);
+            double radRefNPDecl = convertDegToRad(90 - refNP.Decl);
+            double raDif = Math.Abs(convertDegToRad(refNP.RA) - convertDegToRad(np.RA));
+
+            // spherical law of cosines
+            double cAngle = Math.Acos(Math.Cos(radNPDecl) * Math.Cos(radRefNPDecl) + Math.Sin(radNPDecl) * Math.Sin(radRefNPDecl) * Math.Cos(raDif));
+            return convertRadToDeg(cAngle);
+        }
+        private double findLAN(VecSphere refNP, VecSphere origin)
+        {
             double radRefNPRA = convertDegToRad(refNP.RA);
             double radRefNPDecl = convertDegToRad(refNP.Decl);
-
-            double value = Math.Sqrt(Math.Pow(radNPRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radNPRA * radRefNPRA * Math.Cos(radRefNPDecl - radNPDecl));
-            return convertRadToDeg(value);
-        }
-        private double findLAN(double refNPRA, double refNPDecl, double originRA, double originDecl)
-        {
-            double radRefNPRA = convertDegToRad(refNPRA);
-            double radRefNPDecl = convertDegToRad(refNPDecl);
-            double radOriginRA = convertDegToRad(originRA);
-            double radOriginDecl = convertDegToRad(originDecl);
+            double radOriginRA = convertDegToRad(origin.RA);
+            double radOriginDecl = convertDegToRad(origin.Decl);
 
             double value = Math.Cos(Math.Sqrt(Math.Pow(radOriginRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radOriginRA * radRefNPRA * Math.Cos(radRefNPDecl - radOriginDecl)));
             return convertRadToDeg(value);
         }
 
-        private double translateRA(double ra, double decl, double obl)
+        private double translateRA(VecSphere vec, double obl)
         {
-            double radRA = convertDegToRad(ra);
-            double radDecl = convertDegToRad(decl);
+            double radRA = convertDegToRad(vec.RA);
+            double radDecl = convertDegToRad(vec.Decl);
             double radObl = convertDegToRad(obl);
 
             double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
@@ -206,7 +247,35 @@ namespace KSP_Library
             }
             else return convertRadToDeg(value);
         }
-        private double translateDecl(double ra, double decl, double obl)
+        private double translateDecl(VecSphere vec, double obl)
+        {
+            double radRA = convertDegToRad(vec.RA);
+            double radDecl = convertDegToRad(vec.Decl);
+            double radObl = convertDegToRad(obl);
+
+            double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
+            return convertRadToDeg(value);
+        }
+
+        private double translateRAReverse(double ra, double decl, double obl)
+        {
+            double radRA = convertDegToRad(ra);
+            double radDecl = convertDegToRad(decl);
+            double radObl = convertDegToRad(obl);
+
+            double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+            double denom = Math.Cos(radRA);
+            double value = Math.Atan(num / denom);
+
+            double Rnum = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+            double Rdenom = Math.Cos(radRA);
+            if (denom < 0)
+            {
+                return convertRadToDeg(value + Math.PI);
+            }
+            else return convertRadToDeg(value);
+        }
+        private double translateDeclReverse(double ra, double decl, double obl)
         {
             double radRA = convertDegToRad(ra);
             double radDecl = convertDegToRad(decl);
