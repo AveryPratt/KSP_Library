@@ -55,14 +55,39 @@ namespace KSP_Library
         public double X;
         public double Y;
         public double Z;
-
-        private VecSphere ToVecSphere()
+        
+        public void Rotate(VecCart axis, double angle)
         {
-            return new VecSphere()
+            double[,] R = new double[3, 3];
+            R[0, 0] = Math.Cos(angle) + Math.Pow(axis.X, 2) * (1 - Math.Cos(angle));
+            R[0, 1] = axis.Y * axis.X * (1 - Math.Cos(angle)) + axis.Z * Math.Sin(angle);
+            R[0, 2] = axis.Z * axis.X * (1 - Math.Cos(angle)) - axis.Y * Math.Sin(angle);
+
+            R[1, 0] = axis.X * axis.Y * (1 - Math.Cos(angle)) - axis.Z * Math.Sin(angle);
+            R[1, 1] = Math.Cos(angle) + Math.Pow(axis.Y, 2) * 1 - Math.Cos(angle);
+            R[1, 2] = axis.Z * axis.Y * (1 - Math.Cos(angle)) + axis.X * Math.Sin(angle);
+
+            R[2, 0] = axis.X * axis.Z * (1 - Math.Cos(angle)) + axis.Y * Math.Sin(angle);
+            R[2, 1] = axis.Y * axis.Z * (1 - Math.Cos(angle)) - axis.X * Math.Sin(angle);
+            R[2, 2] = Math.Cos(angle) + Math.Pow(axis.Y, 2) * 1 - Math.Cos(angle);
+
+            double x = X * R[0, 0] + Y * R[1, 0] + Z * R[2, 0];
+            double y = X * R[0, 1] + Y * R[1, 1] + Z * R[2, 1];
+            double z = X * R[0, 2] + Y * R[1, 2] + Z * R[2, 2];
+
+            X = x;
+            Y = y;
+            Z = z;
+        }
+        public VecSphere ToVecSphere()
+        {
+            VecSphere radVecSphere = new VecSphere()
             {
                 RA = Math.Atan2(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), Z),
                 Decl = Math.Atan2(Y, X)
             };
+            radVecSphere.ConvertToDeg();
+            return radVecSphere;
         }
 
         public override int GetHashCode()
@@ -86,13 +111,53 @@ namespace KSP_Library
         public double RA;
         public double Decl;
 
-        private VecCart ToVecCart()
+        public void ConvertToRad()
         {
+            RA = convertDegToRad(RA);
+            Decl = convertDegToRad(Decl);
+        }
+        public void ConvertToDeg()
+        {
+            RA = convertRadToDeg(RA);
+            Decl = convertRadToDeg(Decl);
+        }
+
+        private double convertDegToRad(double deg)
+        {
+            return (deg / 180) * Math.PI;
+            //while (rad < 0)
+            //{
+            //    rad += 2 * Math.PI;
+            //}
+            //while (rad >= 2 * Math.PI)
+            //{
+            //    rad -= 2 * Math.PI;
+            //}
+            //return rad;
+        }
+        private double convertRadToDeg(double rad)
+        {
+            return (rad / Math.PI) * 180;
+            //while (deg < 0)
+            //{
+            //    deg += 360;
+            //}
+            //while (deg >= 360)
+            //{
+            //    deg -= 360;
+            //}
+            //return Math.Round(deg, 4);
+        }
+
+        public VecCart ToVecCart()
+        {
+            double radRA = convertDegToRad(RA);
+            double radDecl = convertDegToRad(Decl);
             return new VecCart()
             {
-                X = Math.Sin(RA) * Math.Cos(Decl),
-                Y = Math.Sin(RA) * Math.Cos(Decl),
-                Z = Math.Cos(RA)
+                X = Math.Sin(radRA) * Math.Cos(radDecl),
+                Y = Math.Sin(radRA) * Math.Cos(radDecl),
+                Z = Math.Cos(radRA)
             };
         }
 
@@ -127,7 +192,7 @@ namespace KSP_Library
             Name = name;
             NP = new VecSphere()
             {
-                RA = 0,
+                RA = 270,
                 Decl = 90
             };
             Origin = new VecSphere()
@@ -140,32 +205,23 @@ namespace KSP_Library
         {
             Name = name;
             NP = np;
-            
-            LAN = np.RA + 90;
-            Incl = 90 - np.Decl;
-            RefPlane = new Plane();
-
-            Origin = new VecSphere()
-            {
-                RA = LAN,
-                Decl = 0
-            };
+            ResetRefPlane();
         }
         public Plane(Plane refPlane, VecSphere np, string name = "")
         {
             Name = name;
             NP = np;
             RefPlane = refPlane;
-            
-            VecSphere relNP = translateFixToRel(np, refPlane);
+            RefPlane.ResetRefPlane();
+            VecSphere relNP = RefPlane.TranslateCoords(np);
             LAN = relNP.RA + 90;
-            Incl = findCAngle(np, refPlane.NP);
+            Incl = FindCAngle(np, refPlane.NP);
             VecSphere relOrigin = new VecSphere()
             {
                 RA = LAN,
                 Decl = 0
             };
-            Origin = translateRelToFix(relOrigin, refPlane);
+            Origin = RefPlane.TranslateCoords(relOrigin, false);
         }
         public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
@@ -178,139 +234,130 @@ namespace KSP_Library
                 RA = lan - 90,
                 Decl = 90 - incl
             };
-            NP = translateRelToFix(relNP, refPlane);
+            NP = RefPlane.TranslateCoords(relNP, false);
             VecSphere relOrigin = new VecSphere()
             {
                 RA = lan,
                 Decl = 0
             };
-            Origin = translateRelToFix(relOrigin, refPlane);
+            Origin = RefPlane.TranslateCoords(relOrigin, false);
         }
-        private Plane resetPlane(Plane plane)
+        private void setLAN()
         {
-            Plane newPlane = new Plane(plane.NP, plane.Name);
-            return newPlane;
+            VecSphere radRefNP = NP;
+            radRefNP.ConvertToRad();
+            VecSphere radOrigin = Origin;
+            radOrigin.ConvertToRad();
+
+            double radLAN = Math.Cos(Math.Sqrt(Math.Pow(radOrigin.RA, 2) + Math.Pow(radRefNP.RA, 2) - 2 * radOrigin.RA * radRefNP.RA * Math.Cos(radRefNP.Decl - radOrigin.Decl)));
+            LAN = radLAN * (180 / Math.PI);
+        }
+        private void setIncl()
+        {
+            Incl = FindCAngle(NP, RefPlane.NP);
         }
 
-        private VecSphere translateFixToRel(VecSphere fix, Plane relPlane)
+        public void ResetRefPlane()
         {
-            double obl = 90 - relPlane.NP.Decl;
-            return new VecSphere()
+            RefPlane = new Plane();
+            LAN = NP.RA + 90;
+            Incl = 90 - NP.Decl;
+            Origin = new VecSphere()
             {
-                RA = translateRA(fix, obl),
-                Decl = translateDecl(fix, obl)
+                RA = LAN,
+                Decl = 0
             };
         }
-        private VecSphere translateRelToFix(VecSphere rel, Plane relPlane)
+        public VecSphere TranslateCoords(VecSphere vec, bool fixToRel = true)
         {
-            double obl = 90 - relPlane.NP.Decl;
-            return new VecSphere()
+            VecCart vecCart = vec.ToVecCart();
+            Plane rotPlane = new Plane(NP); // uses this Plane with reset RefPlane
+            VecSphere axis;
+            if (!fixToRel)
             {
-                RA = translateRA(rel, obl),
-                Decl = translateDecl(rel, obl)
-            };
+                axis = new VecSphere()
+                {
+                    RA = rotPlane.Origin.RA + 180,
+                    Decl = rotPlane.Origin.Decl
+                };
+            }
+            else
+            {
+                axis = rotPlane.Origin;
+            }
+            double angle = Plane.FindCAngle(rotPlane.NP, rotPlane.RefPlane.NP);
+            vecCart.Rotate(axis.ToVecCart(), angle);
+            return vecCart.ToVecSphere();
         }
+        public static double FindCAngle(VecSphere vec1, VecSphere vec2)
+        {
+            vec1.ConvertToRad();
+            vec2.ConvertToRad();
 
-        private double findCAngle(VecSphere np, VecSphere refNP)
-        {
-            double radNPDecl = convertDegToRad(90 - np.Decl);
-            double radRefNPDecl = convertDegToRad(90 - refNP.Decl);
-            double raDif = Math.Abs(convertDegToRad(refNP.RA) - convertDegToRad(np.RA));
+            double vec1NPDif = Math.PI / 2 - vec1.Decl;
+            double vec2NPDif = Math.PI / 2 - vec2.Decl;
+            double raDif = Math.Abs(vec2.RA - vec1.RA);
 
             // spherical law of cosines
-            double cAngle = Math.Acos(Math.Cos(radNPDecl) * Math.Cos(radRefNPDecl) + Math.Sin(radNPDecl) * Math.Sin(radRefNPDecl) * Math.Cos(raDif));
-            return convertRadToDeg(cAngle);
-        }
-        private double findLAN(VecSphere refNP, VecSphere origin)
-        {
-            double radRefNPRA = convertDegToRad(refNP.RA);
-            double radRefNPDecl = convertDegToRad(refNP.Decl);
-            double radOriginRA = convertDegToRad(origin.RA);
-            double radOriginDecl = convertDegToRad(origin.Decl);
-
-            double value = Math.Cos(Math.Sqrt(Math.Pow(radOriginRA, 2) + Math.Pow(radRefNPRA, 2) - 2 * radOriginRA * radRefNPRA * Math.Cos(radRefNPDecl - radOriginDecl)));
-            return convertRadToDeg(value);
+            double cAngle = Math.Acos(Math.Cos(vec1NPDif) * Math.Cos(vec2NPDif) + Math.Sin(vec1NPDif) * Math.Sin(vec2NPDif) * Math.Cos(raDif));
+            return cAngle * (180 / Math.PI);
         }
 
-        private double translateRA(VecSphere vec, double obl)
-        {
-            double radRA = convertDegToRad(vec.RA);
-            double radDecl = convertDegToRad(vec.Decl);
-            double radObl = convertDegToRad(obl);
+        //private double translateRA(VecSphere vec, double obl)
+        //{
+        //    double radRA = convertDegToRad(vec.RA);
+        //    double radDecl = convertDegToRad(vec.Decl);
+        //    double radObl = convertDegToRad(obl);
 
-            double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
-            double denom = Math.Cos(radRA);
-            double value = Math.Atan(num / denom);
-            if (denom < 0)
-            {
-                return convertRadToDeg(value + Math.PI);
-            }
-            else return convertRadToDeg(value);
-        }
-        private double translateDecl(VecSphere vec, double obl)
-        {
-            double radRA = convertDegToRad(vec.RA);
-            double radDecl = convertDegToRad(vec.Decl);
-            double radObl = convertDegToRad(obl);
+        //    double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+        //    double denom = Math.Cos(radRA);
+        //    double value = Math.Atan(num / denom);
+        //    if (denom < 0)
+        //    {
+        //        return convertRadToDeg(value + Math.PI);
+        //    }
+        //    else return convertRadToDeg(value);
+        //}
+        //private double translateDecl(VecSphere vec, double obl)
+        //{
+        //    double radRA = convertDegToRad(vec.RA);
+        //    double radDecl = convertDegToRad(vec.Decl);
+        //    double radObl = convertDegToRad(obl);
 
-            double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
-            return convertRadToDeg(value);
-        }
+        //    double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
+        //    return convertRadToDeg(value);
+        //}
 
-        private double translateRAReverse(double ra, double decl, double obl)
-        {
-            double radRA = convertDegToRad(ra);
-            double radDecl = convertDegToRad(decl);
-            double radObl = convertDegToRad(obl);
 
-            double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
-            double denom = Math.Cos(radRA);
-            double value = Math.Atan(num / denom);
 
-            double Rnum = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
-            double Rdenom = Math.Cos(radRA);
-            if (denom < 0)
-            {
-                return convertRadToDeg(value + Math.PI);
-            }
-            else return convertRadToDeg(value);
-        }
-        private double translateDeclReverse(double ra, double decl, double obl)
-        {
-            double radRA = convertDegToRad(ra);
-            double radDecl = convertDegToRad(decl);
-            double radObl = convertDegToRad(obl);
 
-            double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
-            return convertRadToDeg(value);
-        }
+        //private double translateRAReverse(double ra, double decl, double obl)
+        //{
+        //    double radRA = convertDegToRad(ra);
+        //    double radDecl = convertDegToRad(decl);
+        //    double radObl = convertDegToRad(obl);
 
-        private double convertDegToRad(double deg)
-        {
-            double rad = (deg / 180) * Math.PI;
-            while (rad < 0)
-            {
-                rad += 2 * Math.PI;
-            }
-            while (rad >= 2 * Math.PI)
-            {
-                rad -= 2 * Math.PI;
-            }
-            return rad;
-        }
-        private double convertRadToDeg(double rad)
-        {
-            double deg = (rad / Math.PI) * 180;
-            while (deg < 0)
-            {
-                deg += 360;
-            }
-            while (deg >= 360)
-            {
-                deg -= 360;
-            }
-            return Math.Round(deg, 4);
-        }
+        //    double num = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+        //    double denom = Math.Cos(radRA);
+        //    double value = Math.Atan(num / denom);
+
+        //    double Rnum = Math.Sin(radRA) * Math.Cos(radObl) - Math.Tan(radDecl) * Math.Sin(radObl);
+        //    double Rdenom = Math.Cos(radRA);
+        //    if (denom < 0)
+        //    {
+        //        return convertRadToDeg(value + Math.PI);
+        //    }
+        //    else return convertRadToDeg(value);
+        //}
+        //private double translateDeclReverse(double ra, double decl, double obl)
+        //{
+        //    double radRA = convertDegToRad(ra);
+        //    double radDecl = convertDegToRad(decl);
+        //    double radObl = convertDegToRad(obl);
+
+        //    double value = Math.Asin(Math.Sin(radDecl) * Math.Cos(radObl) + Math.Cos(radDecl) * Math.Sin(radObl) * Math.Sin(radRA));
+        //    return convertRadToDeg(value);
+        //}
 
         // overrides
         public override bool Equals(object obj)
