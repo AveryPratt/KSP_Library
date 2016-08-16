@@ -83,8 +83,8 @@ namespace KSP_Library
         {
             VecSphere radVecSphere = new VecSphere()
             {
-                RA = Math.Atan2(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), Z),
-                Decl = Math.Atan2(Y, X)
+                RA = Math.PI / 2 - Math.Atan2(Y, X),
+                Decl = Math.Atan2(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), Z)
             };
             radVecSphere.ConvertToDeg();
             return radVecSphere;
@@ -155,9 +155,9 @@ namespace KSP_Library
             double radDecl = convertDegToRad(Decl);
             return new VecCart()
             {
-                X = Math.Sin(radRA) * Math.Cos(radDecl),
-                Y = Math.Sin(radRA) * Math.Cos(radDecl),
-                Z = Math.Cos(radRA)
+                X = Math.Sin(Math.PI / 2 - radDecl) * Math.Cos(radRA),
+                Y = Math.Sin(Math.PI / 2 - radDecl) * Math.Sin(radRA),
+                Z = Math.Cos(Math.PI / 2 - radDecl)
             };
         }
 
@@ -212,9 +212,19 @@ namespace KSP_Library
             Name = name;
             NP = np;
             RefPlane = refPlane;
-            RefPlane.ResetRefPlane();
-            VecSphere relNP = RefPlane.TranslateCoords(np);
-            LAN = relNP.RA + 90;
+            // spherical triangle between refPlane NP and Origin, and np
+            double a = (Math.PI / 180) * FindCAngle(np, refPlane.Origin);
+            double b = (Math.PI / 180) * FindCAngle(np, refPlane.NP);
+            double c = Math.PI / 2;
+            if(np.RA > 180)
+            {
+                LAN = 270 - (180 / Math.PI) * Math.Acos((Math.Cos(a) - Math.Cos(b) * Math.Cos(c)) / (Math.Sin(b) * Math.Sin(c)));
+            }
+            else
+            {
+                LAN = 90 + (180 / Math.PI) * Math.Acos((Math.Cos(a) - Math.Cos(b) * Math.Cos(c)) / (Math.Sin(b) * Math.Sin(c)));
+            }
+            //LAN = relNP.RA + 90;
             Incl = FindCAngle(np, refPlane.NP);
             VecSphere relOrigin = new VecSphere()
             {
@@ -222,6 +232,13 @@ namespace KSP_Library
                 Decl = 0
             };
             Origin = RefPlane.TranslateCoords(relOrigin, false);
+            //Origin = new VecSphere()
+            //{
+            //    RA = refPlane.Origin.RA + 
+            //    Decl = Math.Cos((Math.PI / 180) * (refPlane.NP.Decl)) * LAN
+            //};
+            //Origin = RefPlane.TranslateCoords(relOrigin, false);
+            //Origin.RA -= RefPlane.Origin.RA;
         }
         public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
@@ -270,6 +287,7 @@ namespace KSP_Library
         }
         public VecSphere TranslateCoords(VecSphere vec, bool fixToRel = true)
         {
+            vec.RA -= LAN;
             VecCart vecCart = vec.ToVecCart();
             Plane rotPlane = new Plane(NP); // uses this Plane with reset RefPlane
             VecSphere axis;
@@ -286,8 +304,11 @@ namespace KSP_Library
                 axis = rotPlane.Origin;
             }
             double angle = Plane.FindCAngle(rotPlane.NP, rotPlane.RefPlane.NP);
-            vecCart.Rotate(axis.ToVecCart(), angle);
-            return vecCart.ToVecSphere();
+            VecCart axisCart = axis.ToVecCart();
+            vecCart.Rotate(axisCart, angle);
+            VecSphere vecSphere = vecCart.ToVecSphere();
+            vecSphere.RA += LAN;
+            return vecSphere;
         }
         public static double FindCAngle(VecSphere vec1, VecSphere vec2)
         {
