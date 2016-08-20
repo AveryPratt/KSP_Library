@@ -210,35 +210,17 @@ namespace KSP_Library
         public Plane(Plane refPlane, VecSphere np, string name = "")
         {
             Name = name;
-            NP = np;
             RefPlane = refPlane;
-            // spherical triangle between refPlane NP and Origin, and np
-            double a = (Math.PI / 180) * FindCAngle(np, refPlane.Origin);
-            double b = (Math.PI / 180) * FindCAngle(np, refPlane.NP);
-            double c = Math.PI / 2;
-            if(np.RA > 180)
-            {
-                LAN = 270 - (180 / Math.PI) * Math.Acos((Math.Cos(a) - Math.Cos(b) * Math.Cos(c)) / (Math.Sin(b) * Math.Sin(c)));
-            }
-            else
-            {
-                LAN = 90 + (180 / Math.PI) * Math.Acos((Math.Cos(a) - Math.Cos(b) * Math.Cos(c)) / (Math.Sin(b) * Math.Sin(c)));
-            }
-            //LAN = relNP.RA + 90;
-            Incl = FindCAngle(np, refPlane.NP);
+            Incl = FindIncl(np, refPlane.NP);
+            LAN = np.RA + 90;
+
+            NP = np;
             VecSphere relOrigin = new VecSphere()
             {
                 RA = LAN,
                 Decl = 0
             };
-            Origin = RefPlane.TranslateCoords(relOrigin, false);
-            //Origin = new VecSphere()
-            //{
-            //    RA = refPlane.Origin.RA + 
-            //    Decl = Math.Cos((Math.PI / 180) * (refPlane.NP.Decl)) * LAN
-            //};
-            //Origin = RefPlane.TranslateCoords(relOrigin, false);
-            //Origin.RA -= RefPlane.Origin.RA;
+            Origin = TranslateCoords(relOrigin, false);
         }
         public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
@@ -271,7 +253,7 @@ namespace KSP_Library
         }
         private void setIncl()
         {
-            Incl = FindCAngle(NP, RefPlane.NP);
+            Incl = FindIncl(NP, RefPlane.NP);
         }
 
         public void ResetRefPlane()
@@ -287,7 +269,6 @@ namespace KSP_Library
         }
         public VecSphere TranslateCoords(VecSphere vec, bool fixToRel = true)
         {
-            vec.RA -= LAN;
             VecCart vecCart = vec.ToVecCart();
             Plane rotPlane = new Plane(NP); // uses this Plane with reset RefPlane
             VecSphere axis;
@@ -303,21 +284,22 @@ namespace KSP_Library
             {
                 axis = rotPlane.Origin;
             }
-            double angle = Plane.FindCAngle(rotPlane.NP, rotPlane.RefPlane.NP);
+            double angle = Plane.FindIncl(rotPlane.NP, rotPlane.RefPlane.NP);
             VecCart axisCart = axis.ToVecCart();
             vecCart.Rotate(axisCart, angle);
             VecSphere vecSphere = vecCart.ToVecSphere();
             vecSphere.RA += LAN;
             return vecSphere;
         }
-        public static double FindCAngle(VecSphere vec1, VecSphere vec2)
-        {
-            vec1.ConvertToRad();
-            vec2.ConvertToRad();
 
-            double vec1NPDif = Math.PI / 2 - vec1.Decl;
-            double vec2NPDif = Math.PI / 2 - vec2.Decl;
-            double raDif = Math.Abs(vec2.RA - vec1.RA);
+        public static double FindIncl(VecSphere np1, VecSphere np2)
+        {
+            np1.ConvertToRad();
+            np2.ConvertToRad();
+
+            double vec1NPDif = Math.PI / 2 - np1.Decl;
+            double vec2NPDif = Math.PI / 2 - np2.Decl;
+            double raDif = Math.Abs(np2.RA - np1.RA);
 
             // spherical law of cosines
             double cAngle = Math.Acos(Math.Cos(vec1NPDif) * Math.Cos(vec2NPDif) + Math.Sin(vec1NPDif) * Math.Sin(vec2NPDif) * Math.Cos(raDif));
