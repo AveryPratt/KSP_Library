@@ -211,23 +211,64 @@ namespace KSP_Library
         {
             Name = name;
             RefPlane = refPlane;
-            Incl = FindIncl(np, refPlane.NP);
-            LAN = np.RA + 90;
-
+            Incl = FindCAngle(np, refPlane.NP);
             NP = np;
-            VecSphere relOrigin = new VecSphere()
+
+            // find: LAN, Origin (relOrigin, relNP)
+
+            VecSphere rotAxis = new VecSphere()
             {
-                RA = LAN,
+                RA = (refPlane.NP.RA + 90) % 360,
                 Decl = 0
             };
-            Origin = TranslateCoords(relOrigin, false);
+            VecCart rotAxisCart = rotAxis.ToVecCart();
+            VecCart NPCart = NP.ToVecCart();
+            NPCart.Rotate(rotAxisCart, Incl);
+            VecSphere relNP = NPCart.ToVecSphere();
+            VecSphere refRotAxis = new VecSphere()
+            {
+                Decl = 0
+            };
+            if (NP.Decl >= 0 ^ refPlane.Origin.RA - rotAxis.RA > 180)
+            {
+                refRotAxis.RA = FindCAngle(refPlane.Origin, rotAxis);
+            }
+            else
+            {
+                refRotAxis.RA = 360 - FindCAngle(refPlane.Origin, rotAxis);
+            }
+            relNP.RA += (refRotAxis.RA - rotAxis.RA);
+            LAN = (relNP.RA + 90) % 360;
+            //VecSphere relOrigin = new VecSphere()
+            //{
+            //    RA = (relNP.RA + 90) % 360,
+            //    Decl = 0
+            //};
+            //VecCart relOriginCart = relOrigin.ToVecCart();
+            //VecSphere rotAxisInv = new VecSphere()
+            //{
+            //    RA = (rotAxis.RA + 180) % 360,
+            //    Decl = 0
+            //};
+            //relOriginCart.Rotate(rotAxisInv.ToVecCart(), refPlane.Incl);
+            //Origin = relOriginCart.ToVecSphere();
+            //if (NP.Decl >= 0 ^ refPlane.Origin.RA - rotAxis.RA > 180)
+            //{
+            //    refRotAxis.RA = FindCAngle(refPlane.Origin, rotAxis);
+            //}
+            //else
+            //{
+            //    refRotAxis.RA = 360 - FindCAngle(refPlane.Origin, rotAxis);
+            //}
         }
         public Plane(Plane refPlane, double lan, double incl, string name = "")
         {
             Name = name;
-            LAN = lan;
-            Incl = incl;
             RefPlane = refPlane;
+            Incl = incl;
+            LAN = lan;
+
+            // find: NP, Origin
             VecSphere relNP = new VecSphere()
             {
                 RA = lan - 90,
@@ -253,7 +294,7 @@ namespace KSP_Library
         }
         private void setIncl()
         {
-            Incl = FindIncl(NP, RefPlane.NP);
+            Incl = FindCAngle(NP, RefPlane.NP);
         }
 
         public void ResetRefPlane()
@@ -271,6 +312,17 @@ namespace KSP_Library
         {
             VecCart vecCart = vec.ToVecCart();
             Plane rotPlane = new Plane(NP); // uses this Plane with reset RefPlane
+            double rot1;
+            if (RefPlane.Origin.Decl < 0)
+            {
+                rot1 = 360 - FindCAngle(rotPlane.Origin, RefPlane.Origin);
+            }
+            else
+            {
+                rot1 = FindCAngle(rotPlane.Origin, RefPlane.Origin);
+            }
+            double rot2;
+            rot2 = rotPlane.Origin.RA;
             VecSphere axis;
             if (!fixToRel)
             {
@@ -284,7 +336,7 @@ namespace KSP_Library
             {
                 axis = rotPlane.Origin;
             }
-            double angle = Plane.FindIncl(rotPlane.NP, rotPlane.RefPlane.NP);
+            double angle = Plane.FindCAngle(rotPlane.NP, rotPlane.RefPlane.NP);
             VecCart axisCart = axis.ToVecCart();
             vecCart.Rotate(axisCart, angle);
             VecSphere vecSphere = vecCart.ToVecSphere();
@@ -292,14 +344,14 @@ namespace KSP_Library
             return vecSphere;
         }
 
-        public static double FindIncl(VecSphere np1, VecSphere np2)
+        public static double FindCAngle(VecSphere vs1, VecSphere vs2)
         {
-            np1.ConvertToRad();
-            np2.ConvertToRad();
+            vs1.ConvertToRad();
+            vs2.ConvertToRad();
 
-            double vec1NPDif = Math.PI / 2 - np1.Decl;
-            double vec2NPDif = Math.PI / 2 - np2.Decl;
-            double raDif = Math.Abs(np2.RA - np1.RA);
+            double vec1NPDif = Math.PI / 2 - vs1.Decl;
+            double vec2NPDif = Math.PI / 2 - vs2.Decl;
+            double raDif = Math.Abs(vs2.RA - vs1.RA);
 
             // spherical law of cosines
             double cAngle = Math.Acos(Math.Cos(vec1NPDif) * Math.Cos(vec2NPDif) + Math.Sin(vec1NPDif) * Math.Sin(vec2NPDif) * Math.Cos(raDif));
