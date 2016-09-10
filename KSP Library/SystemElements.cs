@@ -7,49 +7,6 @@ using System.Threading.Tasks;
 
 namespace KSP_Library
 {
-    public abstract class SolarSystem
-    {
-        public Body[] Bodies { get; set; }
-
-        // constructors
-        public SolarSystem() { }
-        public SolarSystem(Body[] bodies)
-        {
-            Bodies = bodies;
-        }
-
-        // methods
-        public virtual Body GetSystemBody(string bodyName)
-        {
-            return Bodies.Single(b => b.Name == bodyName.ToUpper());
-        }
-        public virtual Body GetSystemBody(int bodyIndex)
-        {
-            return Bodies[bodyIndex];
-        }
-
-        public override int GetHashCode()
-        {
-            return Bodies.GetHashCode();
-        }
-        public override bool Equals(object obj)
-        {
-            if (((SolarSystem)obj).GetHashCode() == this.GetHashCode())
-            {
-                return true;
-            }
-            else return false;
-        }
-        public override string ToString()
-        {
-            StringBuilder bodyNames = new StringBuilder();
-            foreach(Body body in Bodies)
-            {
-                bodyNames.Append(body.ToString() + "\n");
-            }
-            return bodyNames.ToString();
-        }
-    }
     public struct VecCart
     {
         public double X;
@@ -58,6 +15,20 @@ namespace KSP_Library
         
         public void Rotate(VecCart axis, double angle)
         {
+            //double a;
+            //double b;
+            //double c;
+            //// z-axis rotation
+            //X = a * Math.Cos(angle) - Y * Math.Sin(angle);
+            //Y = b * Math.Sin(angle) + Y * Math.Cos(angle);
+            //Z = c;
+
+            /*x' = x*cos q - y*sin q
+            y' = x*sin q + y*cos q 
+            z' = z*/
+
+            angle = (angle / 180) * Math.PI;
+
             double[,] R = new double[3, 3];
             R[0, 0] = Math.Cos(angle) + Math.Pow(axis.X, 2) * (1 - Math.Cos(angle));
             R[0, 1] = axis.Y * axis.X * (1 - Math.Cos(angle)) + axis.Z * Math.Sin(angle);
@@ -111,6 +82,60 @@ namespace KSP_Library
         public double RA;
         public double Decl;
 
+        public void RefineCoords()
+        {
+            while (RA < 0)
+            {
+                RA += 360;
+            }
+            while (RA >= 360)
+            {
+                RA -= 360;
+            }
+            while (Decl < 0)
+            {
+                Decl += 360;
+            }
+            while (Decl >= 360)
+            {
+                Decl -= 360;
+            }
+        }
+        public VecCart ToVecCart()
+        {
+            VecSphere temp = this;
+            temp.ConvertToRad();
+            return new VecCart()
+            {
+                X = Math.Sin(Math.PI / 2 - temp.Decl) * Math.Cos(temp.RA),
+                Y = Math.Sin(Math.PI / 2 - temp.Decl) * Math.Sin(temp.RA),
+                Z = Math.Cos(Math.PI / 2 - temp.Decl)
+            };
+        }
+        public VecSphere TranslateCoords(Plane refPlane)
+        {
+            VecSphere axis = new VecSphere()
+            {
+                RA = (refPlane.NP.RA + 270) % 360,
+                Decl = 0
+            };
+            VecCart cart = this.ToVecCart();
+            cart.Rotate(axis.ToVecCart(), 90 - refPlane.NP.Decl);
+            VecSphere newCoords = cart.ToVecSphere();
+            double relAxisRA;
+            if (refPlane.NP.Decl < 0 ^ refPlane.Origin.RA - axis.RA > 180)
+            {
+                relAxisRA = 360 - Plane.FindCAngle(axis, refPlane.Origin);
+            }
+            else
+            {
+                relAxisRA = Plane.FindCAngle(axis, refPlane.Origin);
+            }
+            newCoords.RA += relAxisRA - axis.RA;
+            newCoords.RefineCoords();
+            return newCoords;
+        }
+
         public void ConvertToRad()
         {
             RA = convertDegToRad(RA);
@@ -121,7 +146,6 @@ namespace KSP_Library
             RA = convertRadToDeg(RA);
             Decl = convertRadToDeg(Decl);
         }
-
         private double convertDegToRad(double deg)
         {
             return (deg / 180) * Math.PI;
@@ -149,18 +173,6 @@ namespace KSP_Library
             //return Math.Round(deg, 4);
         }
 
-        public VecCart ToVecCart()
-        {
-            double radRA = convertDegToRad(RA);
-            double radDecl = convertDegToRad(Decl);
-            return new VecCart()
-            {
-                X = Math.Sin(Math.PI / 2 - radDecl) * Math.Cos(radRA),
-                Y = Math.Sin(Math.PI / 2 - radDecl) * Math.Sin(radRA),
-                Z = Math.Cos(Math.PI / 2 - radDecl)
-            };
-        }
-
         public override int GetHashCode()
         {
             int newHash = RA.GetHashCode();
@@ -169,11 +181,15 @@ namespace KSP_Library
         }
         public override bool Equals(object obj)
         {
-            if (((VecSphere)obj).RA == RA && ((VecSphere)obj).Decl == Decl)
+            if(obj.GetType() != typeof(VecSphere))
             {
-                return true;
+                return false;
             }
-            else return false;
+            else if (((VecSphere)obj).GetHashCode() != this.GetHashCode())
+            {
+                return false;
+            }
+            else return true;
         }
     }
     public class Plane
@@ -428,6 +444,50 @@ namespace KSP_Library
             int newHash = NP.GetHashCode();
             newHash ^= Origin.GetHashCode();
             return newHash;
+        }
+    }
+
+    public abstract class SolarSystem
+    {
+        public Body[] Bodies { get; set; }
+
+        // constructors
+        public SolarSystem() { }
+        public SolarSystem(Body[] bodies)
+        {
+            Bodies = bodies;
+        }
+
+        // methods
+        public virtual Body GetSystemBody(string bodyName)
+        {
+            return Bodies.Single(b => b.Name == bodyName.ToUpper());
+        }
+        public virtual Body GetSystemBody(int bodyIndex)
+        {
+            return Bodies[bodyIndex];
+        }
+
+        public override int GetHashCode()
+        {
+            return Bodies.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            if (((SolarSystem)obj).GetHashCode() == this.GetHashCode())
+            {
+                return true;
+            }
+            else return false;
+        }
+        public override string ToString()
+        {
+            StringBuilder bodyNames = new StringBuilder();
+            foreach (Body body in Bodies)
+            {
+                bodyNames.Append(body.ToString() + "\n");
+            }
+            return bodyNames.ToString();
         }
     }
     public interface IOrbital
