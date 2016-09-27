@@ -1,0 +1,16 @@
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.exe.config
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.exe
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\KSP Library.dll
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\KSP Library.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.csprojResolveAssemblyReference.cache
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.exe
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.exe.config
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.exe
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.exe
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\RocketConsoleApp.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\KSP Library.dll
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\bin\Debug\KSP Library.pdb
+C:\Users\Avery\Documents\Visual Studio 2015\Projects\Projects\KSP Projects\RocketConsoleApp\RocketConsoleApp\obj\Debug\RocketConsoleApp.csprojResolveAssemblyReference.cache
